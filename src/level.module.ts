@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { LevelController } from './Application/Resource/Controllers/level.controller';
-import { LevelCalculatorService } from './Domain/Resource/level.calculator.service';
+import { LevelController } from './Application/Level/Controllers/level.controller';
+import { LevelCalculatorService } from './Domain/Level/Calculator/level.calculator.service';
 import { RequiredResourcesConverter } from './Domain/Resource/Converters/required.resources.converter';
 import { QualityConverter } from './Infrastructure/Converters/quality.converter';
 

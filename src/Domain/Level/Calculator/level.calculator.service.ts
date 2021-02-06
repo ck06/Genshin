@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import LevelRequirements from '../../Infrastructure/Data/Requirements/level.requirements';
-import AscensionRequirements from '../../Infrastructure/Data/Requirements/ascension.requirements';
-import RequiredResources from './Models/required.resources';
-import Mora from '../../Infrastructure/Models/Materials/World/mora';
-import ExperienceBook from '../../Infrastructure/Models/Materials/World/experience.book';
-import ElementalGem from '../../Infrastructure/Models/Materials/World/elemental.gem';
-import CommonEnemyDrop from '../../Infrastructure/Models/Materials/Enemy/common';
-import DailyEnemyDrop from '../../Infrastructure/Models/Materials/Enemy/daily';
-import GatheredItem from '../../Infrastructure/Models/Materials/World/gather';
+import LevelRequirements from '../../../Infrastructure/Data/Requirements/level.requirements';
+import AscensionRequirements from '../../../Infrastructure/Data/Requirements/ascension.requirements';
+import RequiredResources from '../../Resource/Models/required.resources';
+import Mora from '../../../Infrastructure/Models/Materials/World/mora';
+import ExperienceBook from '../../../Infrastructure/Models/Materials/World/experience.book';
+import ElementalGem from '../../../Infrastructure/Models/Materials/World/elemental.gem';
+import CommonEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/common';
+import DailyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/daily';
+import GatheredItem from '../../../Infrastructure/Models/Materials/World/gather';
 
 @Injectable()
 export class LevelCalculatorService {
