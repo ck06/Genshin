@@ -83,7 +83,7 @@ export default class RequiredResources {
             this.addBossItems(amount);
         } else if (resource instanceof Crown) {
             // crown is unique in that you only ever need 1, if any.
-            this.addCrown();
+            this.addCrown(amount);
         }
 
         // the remaining items however require quality + amount
@@ -145,7 +145,7 @@ export default class RequiredResources {
         this.boss.add(amount);
     }
 
-    private addCrown() {
-        this.crown.add(1);
+    private addCrown(amount: number) {
+        this.crown.add(amount);
     }
 }
