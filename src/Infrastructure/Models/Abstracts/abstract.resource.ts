@@ -1,9 +1,10 @@
-abstract class ResourceAbstract {
+export default abstract class ResourceAbstract {
     private readonly _name: string;
-    private readonly _amount: number;
     private readonly _quality: number;
 
-    protected constructor(item: string, amount: number, quality: number) {
+    private _amount: number;
+
+    public constructor(item: string, amount: number, quality: number) {
         this._name = item;
         this._amount = amount;
         this._quality = quality;
@@ -19,5 +20,9 @@ abstract class ResourceAbstract {
 
     public get quality(): number {
         return this._quality;
+    }
+
+    public add(amount: number): void {
+        this._amount += amount;
     }
 }
