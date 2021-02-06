@@ -15,8 +15,6 @@ export class LevelCalculatorService {
         let totals = new RequiredResources();
         for (let i = start; i < end; i++) {
             totals.addResource(new Mora(LevelRequirements.EXP_TO_LEVEL[i] * LevelRequirements.MORA_PER_EXP));
-
-            // TODO: fix exp book amounts
             for (let requiredExp = LevelRequirements.EXP_TO_LEVEL[i], quality = 4; quality > 1; quality--) {
                 let books = Math.floor(requiredExp / LevelRequirements.EXP_PER_BOOK[quality]);
                 requiredExp %= LevelRequirements.EXP_PER_BOOK[quality];
