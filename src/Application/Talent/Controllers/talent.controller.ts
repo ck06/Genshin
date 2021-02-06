@@ -15,7 +15,7 @@ export class TalentController {
     @Get('/talent/from/:start/to/:end')
     getXToY(@Param('start') start: number, @Param('end') end: number): string {
         if (end > this.MAX || start < this.MIN) {
-            throw Error(`levels only range ${this.MIN.toString()}~${this.MAX.toString()}`);
+            throw Error(`talents only range ${this.MIN.toString()}~${this.MAX.toString()}`);
         }
 
         return JSON.stringify(this.resourceConverter.toSortedObject(this.talentCalculator.calculate(start, end)));
