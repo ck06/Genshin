@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import LevelRequirements from '../../../Infrastructure/Data/Requirements/level.requirements';
-import CharacterAscensionRequirements from '../../../Infrastructure/Data/Requirements/ascension.requirements';
+import CharacterLevelRequirements from '../../../Infrastructure/Data/Requirements/Character/level.requirements';
+import CharacterAscensionRequirements from '../../../Infrastructure/Data/Requirements/Character/ascension.requirements';
 import RequiredResources from '../../Resource/Models/required.resources';
 import Mora from '../../../Infrastructure/Models/Materials/World/mora';
 import ExperienceBook from '../../../Infrastructure/Models/Materials/World/experience.book';
@@ -14,10 +14,10 @@ export class LevelCalculator {
     public calculate(start: number, end: number): RequiredResources {
         let totals = new RequiredResources();
         for (let i = start; i < end; i++) {
-            totals.addResource(new Mora(LevelRequirements.EXP_TO_LEVEL[i] * LevelRequirements.MORA_PER_EXP));
-            for (let requiredExp = LevelRequirements.EXP_TO_LEVEL[i], quality = 4; quality > 1; quality--) {
-                let books = Math.floor(requiredExp / LevelRequirements.EXP_PER_BOOK[quality]);
-                requiredExp %= LevelRequirements.EXP_PER_BOOK[quality];
+            totals.addResource(new Mora(CharacterLevelRequirements.EXP_TO_LEVEL[i] * CharacterLevelRequirements.MORA_PER_EXP));
+            for (let requiredExp = CharacterLevelRequirements.EXP_TO_LEVEL[i], quality = 4; quality > 1; quality--) {
+                let books = Math.floor(requiredExp / CharacterLevelRequirements.EXP_PER_BOOK[quality]);
+                requiredExp %= CharacterLevelRequirements.EXP_PER_BOOK[quality];
                 totals.addResource(new ExperienceBook(books, quality));
 
                 if (quality === 2 && requiredExp > 0) {

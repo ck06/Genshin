@@ -1,4 +1,4 @@
-export default class LevelRequirements {
+export default class CharacterLevelRequirements {
     // [quality => exp given]
     public static EXP_PER_BOOK: Record<number, number> = {
         2: 1000,
