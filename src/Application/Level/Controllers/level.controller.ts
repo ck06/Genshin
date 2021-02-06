@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { LevelCalculatorService } from '../../../Domain/Level/Calculator/level.calculator.service';
+import { LevelCalculator } from '../../../Domain/Level/Calculator/level.calculator';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
 
 @Controller()
@@ -8,14 +8,14 @@ export class LevelController {
     private readonly MAX = 90;
 
     constructor(
-        private readonly levelCalculator: LevelCalculatorService,
+        private readonly levelCalculator: LevelCalculator,
         private readonly resourceConverter: RequiredResourcesConverter,
     ) {}
 
     @Get('/level/from/:start/to/:end')
     getXToY(@Param('start') start: number, @Param('end') end: number): string {
         if (end > this.MAX || start < this.MIN) {
-            throw Error('levels only range ' + this.MIN.toString() + '~' + this.MAX.toString());
+            throw Error(`levels only range ${this.MIN.toString()}~${this.MAX.toString()}`);
         }
 
         return JSON.stringify(this.resourceConverter.toSortedObject(this.levelCalculator.calculate(start, end)));

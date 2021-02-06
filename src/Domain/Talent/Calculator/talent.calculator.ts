@@ -9,7 +9,8 @@ import WeeklyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/week
 import { zprintf } from "../../Shared/zprintf.service";
 
 @Injectable()
-export class TalentCalculatorService {
+export class TalentCalculator
+{
     public calculate(start: number, end: number): RequiredResources {
         let totals = new RequiredResources();
         for (let i = start; i < end; i++) {

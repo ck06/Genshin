@@ -10,7 +10,7 @@ import DailyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/daily
 import GatheredItem from '../../../Infrastructure/Models/Materials/World/gather';
 
 @Injectable()
-export class LevelCalculatorService {
+export class LevelCalculator {
     public calculate(start: number, end: number): RequiredResources {
         let totals = new RequiredResources();
         for (let i = start; i < end; i++) {
@@ -25,7 +25,7 @@ export class LevelCalculatorService {
                 }
             }
 
-            if (LevelCalculatorService.isAscensionLevel(i)) {
+            if (LevelCalculator.isAscensionLevel(i)) {
                 const ascension = AscensionRequirements.ASCENSION_LEVELS[i];
                 const amount = AscensionRequirements.ASCENSION_REQUIRED_AMOUNTS[ascension];
                 const quality = AscensionRequirements.ASCENSION_REQUIRED_QUALITIES[ascension];
