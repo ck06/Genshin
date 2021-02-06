@@ -35,4 +35,14 @@ export class TalentController {
     getMinToMax(): string {
         return this.getXToY(this.MIN, this.MAX);
     }
+
+    @Get('')
+    getRoot(): string {
+        return this.getMinToMax();
+    }
+
+    @Get('/pretty')
+    getPretty(): string {
+        return JSON.stringify(this.getMinToMax());
+    }
 }
