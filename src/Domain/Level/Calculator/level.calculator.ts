@@ -33,7 +33,7 @@ export class LevelCalculator {
                 totals.addResource(new ElementalGem('', amount.gems, quality.gems));
                 totals.addResource(new CommonEnemyDrop('', amount.commonDrops, quality.commonDrops));
                 totals.addResource(new DailyEnemyDrop('', amount.eliteDrops, quality.eliteDrops));
-                totals.addResource(new GatheredItem('', amount.gatheredItems));
+                totals.addResource(new GatheredItem('', amount.gatheredItems, quality.gatheredItems));
                 totals.addResource(new Mora(amount.mora));
             }
         }

@@ -46,7 +46,7 @@ class CharacterTalentQuality {
         return this._weeklyDrops;
     }
 
-    public get crown(): number {
+    public get crowns(): number {
         return this._crown;
     }
 }
