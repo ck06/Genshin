@@ -1,4 +1,4 @@
-export default abstract class ResourceAbstract {
+export default abstract class AbstractResource {
     private readonly _name: string;
     private readonly _quality: number;
 

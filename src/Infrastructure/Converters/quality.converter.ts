@@ -1,5 +1,8 @@
-class QualityConverter {
-    private qualityToString: Record<number, string> = {
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class QualityConverter {
+    private static qualityToString: Record<number, string> = {
         1: 'grey',
         2: 'green',
         3: 'blue',
@@ -7,7 +10,7 @@ class QualityConverter {
         5: 'gold',
     };
 
-    public getStringForQuality(quality: number): string {
+    public static getStringForQuality(quality: number): string {
         return this.qualityToString[quality];
     }
 }

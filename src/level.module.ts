@@ -9,4 +9,4 @@ import { QualityConverter } from './Infrastructure/Converters/quality.converter'
     controllers: [LevelController],
     providers: [LevelCalculatorService, RequiredResourcesConverter, QualityConverter],
 })
-export class AppModule {}
+export class LevelModule {}
