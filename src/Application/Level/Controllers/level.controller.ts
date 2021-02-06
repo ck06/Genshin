@@ -18,7 +18,7 @@ export class LevelController {
             throw Error('levels only range ' + this.MIN.toString() + '~' + this.MAX.toString());
         }
 
-        return this.resourceConverter.toJson(this.levelCalculator.calculate(start, end));
+        return JSON.stringify(this.resourceConverter.toSortedObject(this.levelCalculator.calculate(start, end)));
     }
 
     @Get('/level/to/:end')
@@ -36,13 +36,12 @@ export class LevelController {
         return this.getXToY(this.MIN, this.MAX);
     }
 
-    @Get('')
-    getRoot(): string {
-        return this.getMinToMax();
-    }
-
-    @Get('/pretty')
+    @Get('/level/pretty')
     getPretty(): string {
-        return JSON.stringify(this.getMinToMax());
+        return JSON.stringify(
+            this.resourceConverter.toSortedObject(this.levelCalculator.calculate(this.MIN, this.MAX)),
+            null,
+            '\t',
+        );
     }
 }

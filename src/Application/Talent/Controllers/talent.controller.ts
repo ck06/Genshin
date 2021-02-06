@@ -18,7 +18,7 @@ export class TalentController {
             throw Error('talents only range ' + this.MIN.toString() + '~' + this.MAX.toString());
         }
 
-        return this.resourceConverter.toJson(this.talentCalculator.calculate(start, end));
+        return JSON.stringify(this.resourceConverter.toSortedObject(this.talentCalculator.calculate(start, end)));
     }
 
     @Get('/talent/to/:end')
@@ -36,13 +36,12 @@ export class TalentController {
         return this.getXToY(this.MIN, this.MAX);
     }
 
-    @Get('')
-    getRoot(): string {
-        return this.getMinToMax();
-    }
-
-    @Get('/pretty')
+    @Get('talent/pretty')
     getPretty(): string {
-        return JSON.stringify(this.getMinToMax());
+        return JSON.stringify(
+            this.resourceConverter.toSortedObject(this.talentCalculator.calculate(this.MIN, this.MAX)),
+            null,
+            '\t',
+        );
     }
 }

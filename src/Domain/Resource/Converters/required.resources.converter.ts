@@ -36,7 +36,7 @@ export class RequiredResourcesConverter {
      * crown
      * mora
      */
-    public toJson(resources: RequiredResources): string {
+    public toSortedObject(resources: RequiredResources): Record<string, number> {
         let sortedObject: Record<string, number> = {};
 
         resources.experienceCrystal.forEach((crystal: ExperienceCrystal) => {
@@ -136,6 +136,6 @@ export class RequiredResourcesConverter {
         // mora is always filled, even if at 0
         sortedObject['Mora'] = resources.mora.amount;
 
-        return JSON.stringify(sortedObject);
+        return sortedObject;
     }
 }

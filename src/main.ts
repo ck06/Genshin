@@ -1,13 +1,9 @@
 import { NestFactory } from '@nestjs/core';
-import { LevelModule } from './level.module';
-import { TalentModule } from "./talent.module";
+import { KernelModule } from "./kernel.module";
 
 async function bootstrap() {
-    const level = await NestFactory.create(LevelModule);
-    await level.listen(3000);
-
-    const talent = await NestFactory.create(TalentModule)
-    await talent.listen(3001);
+    const kernel = await NestFactory.create(KernelModule);
+    await kernel.listen(3000);
 }
 
 bootstrap();
