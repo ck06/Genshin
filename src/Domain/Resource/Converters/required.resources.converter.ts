@@ -12,7 +12,7 @@ import { zprintf } from '../../Shared/zprintf.service';
 
 @Injectable()
 export class RequiredResourcesConverter {
-    /**
+    /*
      * the order of items is roughly based off of the resource
      * order from the in-game character/talent level up windows
      *
@@ -125,11 +125,12 @@ export class RequiredResourcesConverter {
         });
 
         if (resources.boss.amount > 0) {
-            sortedObject[resources.boss.name !== '' ? resources.boss.name + '(weekly)' : 'Drops (weekly)'] =
-                resources.boss.amount;
+            const name = resources.boss.name !== '' ? resources.boss.name + '(weekly)' : 'Drops (weekly)';
+            sortedObject[name] = resources.boss.amount;
         }
 
         if (resources.crown.amount > 0) {
+            // crown name is hardcoded
             sortedObject[resources.crown.name] = resources.crown.amount;
         }
 

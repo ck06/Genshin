@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import LevelRequirements from '../../../Infrastructure/Data/Requirements/level.requirements';
-import AscensionRequirements from '../../../Infrastructure/Data/Requirements/ascension.requirements';
+import CharacterAscensionRequirements from '../../../Infrastructure/Data/Requirements/ascension.requirements';
 import RequiredResources from '../../Resource/Models/required.resources';
 import Mora from '../../../Infrastructure/Models/Materials/World/mora';
 import ExperienceBook from '../../../Infrastructure/Models/Materials/World/experience.book';
@@ -26,9 +26,9 @@ export class LevelCalculator {
             }
 
             if (LevelCalculator.isAscensionLevel(i)) {
-                const ascension = AscensionRequirements.ASCENSION_LEVELS[i];
-                const amount = AscensionRequirements.ASCENSION_REQUIRED_AMOUNTS[ascension];
-                const quality = AscensionRequirements.ASCENSION_REQUIRED_QUALITIES[ascension];
+                const ascension = CharacterAscensionRequirements.ASCENSION_LEVELS[i];
+                const amount = CharacterAscensionRequirements.ASCENSION_REQUIRED_AMOUNTS[ascension];
+                const quality = CharacterAscensionRequirements.ASCENSION_REQUIRED_QUALITIES[ascension];
 
                 totals.addResource(new ElementalGem('', amount.gems, quality.gems));
                 totals.addResource(new CommonEnemyDrop('', amount.commonDrops, quality.commonDrops));
@@ -42,6 +42,6 @@ export class LevelCalculator {
     }
 
     private static isAscensionLevel(level: number): boolean {
-        return AscensionRequirements.ASCENSION_LEVELS[level] !== undefined;
+        return CharacterAscensionRequirements.ASCENSION_LEVELS[level] !== undefined;
     }
 }

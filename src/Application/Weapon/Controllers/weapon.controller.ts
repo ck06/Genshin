@@ -1,49 +1,45 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { TalentCalculator } from '../../../Domain/Talent/Calculator/talent.calculator';
+import { WeaponCalculator } from '../../../Domain/Weapon/Calculator/weapon.calculator';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
 
 @Controller()
-export class TalentController {
+export class WeaponController {
     private readonly MIN = 1;
-    private readonly MAX = 10;
+    private readonly MAX = 90;
 
     constructor(
-        private readonly talentCalculator: TalentCalculator,
+        private readonly weaponCalculator: WeaponCalculator,
         private readonly resourceConverter: RequiredResourcesConverter,
     ) {}
 
-    @Get('/talent/from/:start/to/:end')
+    @Get('/weapon/from/:start/to/:end')
     getXToY(@Param('start') start: number, @Param('end') end: number): string {
         if (end > this.MAX || start < this.MIN) {
-            throw Error(`talents only range ${this.MIN.toString()}~${this.MAX.toString()}`);
+            throw Error(`weapons only range ${this.MIN.toString()}~${this.MAX.toString()}`);
         }
 
-        return JSON.stringify(
-            this.resourceConverter.toSortedObject(this.talentCalculator.calculate(start, end)),
-        );
+        return JSON.stringify(this.resourceConverter.toSortedObject(this.weaponCalculator.calculate(start, end)));
     }
 
-    @Get('/talent/to/:end')
+    @Get('/weapon/to/:end')
     getToY(@Param('end') end: number): string {
         return this.getXToY(this.MIN, end);
     }
 
-    @Get('/talent/from/:start')
+    @Get('/weapon/from/:start')
     GetFromX(@Param('start') start: number): string {
         return this.getXToY(start, this.MAX);
     }
 
-    @Get('/talent')
+    @Get('/weapon')
     getMinToMax(): string {
         return this.getXToY(this.MIN, this.MAX);
     }
 
-    @Get('talent/pretty')
+    @Get('weapon/pretty')
     getPretty(): string {
         return JSON.stringify(
-            this.resourceConverter.toSortedObject(
-                this.talentCalculator.calculate(this.MIN, this.MAX),
-            ),
+            this.resourceConverter.toSortedObject(this.weaponCalculator.calculate(this.MIN, this.MAX)),
             null,
             '\t',
         );
