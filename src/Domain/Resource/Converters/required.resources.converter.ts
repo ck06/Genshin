@@ -3,7 +3,7 @@ import DailyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/daily
 import DomainDrop from '../../../Infrastructure/Models/Materials/Domain/domain';
 import ElementalGem from '../../../Infrastructure/Models/Materials/World/elemental.gem';
 import ExperienceBook from '../../../Infrastructure/Models/Materials/World/experience.book';
-import ExperienceCrystal from '../../../Infrastructure/Models/Materials/World/experience.crystal';
+import ExperienceOre from '../../../Infrastructure/Models/Materials/World/experience.ore';
 import RequiredResources from '../Models/required.resources';
 import TalentBook from '../../../Infrastructure/Models/Materials/Domain/talent.book';
 import { Injectable } from '@nestjs/common';
@@ -39,7 +39,7 @@ export class RequiredResourcesConverter {
     public toSortedObject(resources: RequiredResources): Record<string, number> {
         let sortedObject: Record<string, number> = {};
 
-        resources.experienceCrystal.forEach((crystal: ExperienceCrystal) => {
+        resources.experienceOre.forEach((crystal: ExperienceOre) => {
             if (crystal.amount > 0) {
                 const quality = QualityConverter.getStringForQuality(crystal.quality);
                 const name =

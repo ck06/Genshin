@@ -14,6 +14,7 @@ export class LevelCalculator {
     public calculate(start: number, end: number): RequiredResources {
         let totals = new RequiredResources();
         for (let i = start; i < end; i++) {
+            // TODO: let required exp build up until hitting an ascension level, and THEN determine amount of books.
             totals.addResource(new Mora(CharacterLevelRequirements.EXP_TO_LEVEL[i] * CharacterLevelRequirements.MORA_PER_EXP));
             for (let requiredExp = CharacterLevelRequirements.EXP_TO_LEVEL[i], quality = 4; quality > 1; quality--) {
                 let books = Math.floor(requiredExp / CharacterLevelRequirements.EXP_PER_BOOK[quality]);

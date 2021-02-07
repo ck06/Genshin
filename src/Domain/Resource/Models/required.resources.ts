@@ -1,10 +1,11 @@
 import Mora from '../../../Infrastructure/Models/Materials/World/mora';
 import GatheredItem from '../../../Infrastructure/Models/Materials/World/gather';
 import ExperienceBook from '../../../Infrastructure/Models/Materials/World/experience.book';
-import ExperienceCrystal from '../../../Infrastructure/Models/Materials/World/experience.crystal';
+import ExperienceOre from '../../../Infrastructure/Models/Materials/World/experience.ore';
 import ElementalGem from '../../../Infrastructure/Models/Materials/World/elemental.gem';
 import CommonEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/common';
 import DailyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/daily';
+import ResinEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/boss';
 import WeeklyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/weekly';
 import Crown from '../../../Infrastructure/Models/Materials/World/crown';
 import AbstractResource from '../../../Infrastructure/Models/Abstracts/abstract.resource';
@@ -21,12 +22,12 @@ export default class RequiredResources {
         new ExperienceBook(0, 4),
         new ExperienceBook(0, 5),
     ];
-    experienceCrystal: AbstractResource[] = [
-        new ExperienceCrystal('', 0, 1),
-        new ExperienceCrystal('', 0, 2),
-        new ExperienceCrystal('', 0, 3),
-        new ExperienceCrystal('', 0, 4),
-        new ExperienceCrystal('', 0, 5),
+    experienceOre: AbstractResource[] = [
+        new ExperienceOre('', 0, 1),
+        new ExperienceOre('', 0, 2),
+        new ExperienceOre('', 0, 3),
+        new ExperienceOre('', 0, 4),
+        new ExperienceOre('', 0, 5),
     ];
     talentBook: AbstractResource[] = [
         new TalentBook('', 0, 1),
@@ -63,7 +64,8 @@ export default class RequiredResources {
         new DailyEnemyDrop('', 0, 4),
         new DailyEnemyDrop('', 0, 5),
     ];
-    boss: AbstractResource = new WeeklyEnemyDrop('', 0);
+    boss: AbstractResource = new ResinEnemyDrop('', 0);
+    weekly: AbstractResource = new WeeklyEnemyDrop('', 0);
     crown: AbstractResource = new Crown();
 
     public constructor(whatToLevel = '') {
@@ -79,8 +81,10 @@ export default class RequiredResources {
             this.addMora(amount);
         } else if (resource instanceof GatheredItem) {
             this.addGatherItems(amount);
+        } else if (resource instanceof ResinEnemyDrop) {
+            this.addResinItems(amount);
         } else if (resource instanceof WeeklyEnemyDrop) {
-            this.addBossItems(amount);
+            this.addWeeklyItems(amount);
         } else if (resource instanceof Crown) {
             // crown is unique in that you only ever need 1, if any.
             this.addCrown(amount);
@@ -90,8 +94,8 @@ export default class RequiredResources {
         const index = resource.quality - 1;
         if (resource instanceof ExperienceBook) {
             this.addExperienceBooks(index, amount);
-        } else if (resource instanceof ExperienceCrystal) {
-            this.addExperienceCrystals(index, amount);
+        } else if (resource instanceof ExperienceOre) {
+            this.addExperienceOre(index, amount);
         } else if (resource instanceof TalentBook) {
             this.addTalentBooks(index, amount);
         } else if (resource instanceof ElementalGem) {
@@ -117,8 +121,8 @@ export default class RequiredResources {
         this.experienceBook[index].add(amount);
     }
 
-    private addExperienceCrystals(index: number, amount: number) {
-        this.experienceCrystal[index].add(amount);
+    private addExperienceOre(index: number, amount: number) {
+        this.experienceOre[index].add(amount);
     }
 
     private addTalentBooks(index: number, amount: number) {
@@ -141,8 +145,12 @@ export default class RequiredResources {
         this.elite[index].add(amount);
     }
 
-    private addBossItems(amount: number) {
+    private addResinItems(amount: number) {
         this.boss.add(amount);
+    }
+
+    private addWeeklyItems(amount: number) {
+        this.weekly.add(amount);
     }
 
     private addCrown(amount: number) {
