@@ -34,7 +34,7 @@ VALUES -- Mondstadt
        ('Philosophies of Gold', 4, 3, '[Wednesday, Saturday, Sunday]'),
        ('Teachings of Prosperity', 2, 3, '[Monday, Thursday, Sunday]'),
        ('Guide to Prosperity', 3, 3, '[Monday, Thursday, Sunday]'),
-       ('Philosophies of Prosperity', 4, 3, '[Monday, Thursday, Sunday]'),
+       ('Philosophies of Prosperity', 4, 3, '[Monday, Thursday, Sunday]')
 ;
 
 -- Local Materials
@@ -195,7 +195,7 @@ VALUES ('Dvalin''s Plume', 5, 10, NULL),
        ('Spirit Locket of Boreas', 5, 10, NULL),
        ('Tusk of Monoceros Caeli', 5, 10, 'Childe'),
        ('Shard of a Foul Legacy', 5, 10, 'Childe'),
-       ('Shadow of the Warrior', 5, 10, 'Childe'),
+       ('Shadow of the Warrior', 5, 10, 'Childe')
 ;
 
 -- Special Talent Level-Up Materials (details: how to obtain)
