@@ -55,14 +55,14 @@ VALUES ('Albedo', 'Geo', 'Basalt Pillar', 'Cecilia', '%Scroll'),
 INSERT INTO character_ascension (level, character, gem, boss, gather, common)
 SELECT levels.level, characters.id, gems.id, bosses.id, gathers.id, commons.id
   FROM temp_character_ascension_levels levels,
-       character_ascension_amounts amounts,
+       character_ascension_details details,
        temp_character_resource_names names
          LEFT JOIN characters ON names.character = characters.name
-         LEFT JOIN items AS gems ON (names.gem = gems.details AND gems.quality = amounts.gem_quality)
-         LEFT JOIN items AS bosses ON (names.boss = bosses.name AND bosses.quality = amounts.boss_quality)
-         LEFT JOIN items AS gathers ON (names.gather = gathers.name AND gathers.quality = amounts.gather_quality)
-         LEFT JOIN items AS commons ON (commons.name LIKE names.common AND commons.quality = amounts.common_quality)
- WHERE levels.level = amounts.level
+         LEFT JOIN items AS gems ON (names.gem = gems.details AND gems.quality = details.gem_quality)
+         LEFT JOIN items AS bosses ON (names.boss = bosses.name AND bosses.quality = details.boss_quality)
+         LEFT JOIN items AS gathers ON (names.gather = gathers.name AND gathers.quality = details.gather_quality)
+         LEFT JOIN items AS commons ON (commons.name LIKE names.common AND commons.quality = details.common_quality)
+ WHERE levels.level = details.level
 ;
 
 -- clean up

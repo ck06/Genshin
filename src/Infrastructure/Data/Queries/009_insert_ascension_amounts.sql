@@ -1,4 +1,4 @@
-INSERT INTO character_ascension_amounts
+INSERT INTO character_ascension_details
 (level, gem_amount, boss_amount, gather_amount, common_amount, mora,
  gem_quality, boss_quality, gather_quality, common_quality)
 VALUES (20, 1, 0, 3, 3, 20000, 2, 4, 1, 1),
@@ -7,4 +7,58 @@ VALUES (20, 1, 0, 3, 3, 20000, 2, 4, 1, 1),
        (60, 3, 8, 30, 18, 80000, 4, 4, 1, 2),
        (70, 6, 12, 45, 12, 100000, 4, 4, 1, 3),
        (80, 6, 20, 60, 24, 120000, 5, 4, 1, 3)
+;
+
+INSERT INTO character_talent_ascension_details
+(level, book_amount, common_amount, weekly_amount,
+ mora, book_quality, common_quality, crown)
+VALUES (1, 3, 6, 0, 12500, 2, 1, FALSE),
+       (2, 2, 3, 0, 17500, 3, 2, FALSE),
+       (3, 4, 4, 0, 25000, 3, 2, FALSE),
+       (4, 6, 6, 0, 30000, 3, 2, FALSE),
+       (5, 9, 9, 0, 37500, 3, 2, FALSE),
+       (6, 4, 4, 1, 120000, 4, 3, FALSE),
+       (7, 6, 6, 1, 260000, 4, 3, FALSE),
+       (8, 12, 9, 2, 450000, 4, 3, FALSE),
+       (9, 16, 12, 2, 700000, 4, 3, TRUE)
+;
+
+insert into weapon_ascension_details
+(level, weapon_quality, domain_amount, elite_amount, common_amount,
+ mora, domain_quality, elite_quality, common_quality)
+ VALUES -- 1 star
+        (20,1,1,1,1,5000,2,2,1),
+        (40,1,1,4,2,5000,3,2,1),
+        (50,1,2,2,2,5000,3,3,2),
+        (60,1,1,4,3,10000,4,3,2),
+
+        -- 2 star
+        (20,2,1,1,1,5000,2,2,1),
+        (40,2,1,5,4,5000,3,2,1),
+        (50,2,3,3,3,10000,3,3,2),
+        (60,2,1,5,4,15000,4,3,2),
+
+        -- 3 star
+        (20,3,2,2,1,5000,2,2,1),
+        (40,3,2,8,5,10000,3,2,1),
+        (50,3,4,4,4,15000,3,3,2),
+        (60,3,2,8,6,20000,4,3,2),
+        (70,3,4,6,4,25000,4,4,3),
+        (80,3,3,12,8,30000,5,4,3),
+
+        -- 4 star
+        (20,4,3,3,2,5000,2,2,1),
+        (40,4,3,12,8,15000,3,2,1),
+        (50,4,6,6,6,20000,3,3,2),
+        (60,4,3,12,9,30000,4,3,2),
+        (70,4,6,9,6,35000,4,4,3),
+        (80,4,4,18,12,45000,5,4,3),
+
+        -- 5 star
+        (20,5,5,5,3,10000,2,2,1),
+        (40,5,5,18,12,20000,3,2,1),
+        (50,5,9,9,9,30000,3,3,2),
+        (60,5,5,18,14,45000,4,3,2),
+        (70,5,9,14,9,55000,4,4,3),
+        (80,5,6,27,18,65000,5,4,3)
 ;
