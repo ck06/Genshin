@@ -187,12 +187,12 @@ VALUES ('Everflame Seed', 4, 9, 'Pyro Regisvine'),
 
 -- Weekly Talent Level-Up Materials (details: which boss they drop from, if needed)
 INSERT INTO items (name, quality, type, details)
-VALUES ('Dvalin''s Plume', 5, 10, NULL),
-       ('Dvalin''s Claw', 5, 10, NULL),
-       ('Dvalin''s Sigh', 5, 10, NULL),
-       ('Tail of Boreas', 5, 10, NULL),
-       ('Ring of Boreas', 5, 10, NULL),
-       ('Spirit Locket of Boreas', 5, 10, NULL),
+VALUES ('Dvalin''s Plume', 5, 10, 'Stormterror'),
+       ('Dvalin''s Claw', 5, 10, 'Stormterror'),
+       ('Dvalin''s Sigh', 5, 10, 'Stormterror'),
+       ('Tail of Boreas', 5, 10, 'Lupus Boreas'),
+       ('Ring of Boreas', 5, 10, 'Lupus Boreas'),
+       ('Spirit Locket of Boreas', 5, 10, 'Lupus Boreas'),
        ('Tusk of Monoceros Caeli', 5, 10, 'Childe'),
        ('Shard of a Foul Legacy', 5, 10, 'Childe'),
        ('Shadow of the Warrior', 5, 10, 'Childe')
