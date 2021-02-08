@@ -22,15 +22,15 @@ INSERT INTO temp_character_resource_names (character, gem, boss, gather, common)
 VALUES ('Albedo', 'Geo', 'Basalt Pillar', 'Cecilia', '%Scroll'),
        ('Amber', 'Pyro', 'Everflame Seed', 'Small Lamp Grass', '%Arrowhead'),
        ('Barbara', 'Hydro', 'Cleansing Heart', 'Philanemo Mushroom', '%Scroll'),
-       ('Beidou', 'Electro', 'Lightning Prism', 'Noctilucous Jade', '% Insignia'),
-       ('Bennett', 'Pyro', 'Everflame Seed', 'Windwheel Aster', '% Insignia'),
+       ('Beidou', 'Electro', 'Lightning Prism', 'Noctilucous Jade', '%e_ Insignia'),
+       ('Bennett', 'Pyro', 'Everflame Seed', 'Windwheel Aster', '%e_ Insignia'),
        ('Chongyun', 'Cryo', 'Hoarfrost Core', 'Cor Lapis', '%Mask'),
        ('Diluc', 'Pyro', 'Everflame Seed', 'Small Lamp Grass', '%''s Insignia'),
        ('Diona', 'Cryo', 'Hoarfrost Core', 'Calla Lily', '%Arrowhead'),
        ('Fischl', 'Electro', 'Lightning Prism', 'Small Lamp Grass', '%Arrowhead'),
        ('Ganyu', 'Cryo', 'Hoarfrost Core', 'Qingxin', '%Nectar'),
        ('Jean', 'Anemo', 'Hurricane Seed', 'Dandelion Seed', '%Mask'),
-       ('Kaeya', 'Cryo', 'Hoarfrost Core', 'Calla Lily', '% Insignia'),
+       ('Kaeya', 'Cryo', 'Hoarfrost Core', 'Calla Lily', '%e_ Insignia'),
        ('Keqing', 'Electro', 'Lightning Prism', 'Cor Lapis', '%Nectar'),
        ('Klee', 'Pyro', 'Everflame Seed', 'Philanemo Mushroom', '%Scroll'),
        ('Lisa', 'Electro', 'Lightning Prism', 'Valberry', 'Slime%'),
@@ -52,7 +52,7 @@ VALUES ('Albedo', 'Geo', 'Basalt Pillar', 'Cecilia', '%Scroll'),
 ;
 
 -- use the temp tables to insert IDs semi-dynamically for each level with the correct qualities.
--- INSERT INTO character_ascension (level, character, gem, boss, gather, common)
+INSERT INTO character_ascension (level, character, gem, boss, gather, common)
 SELECT levels.level, characters.id, gems.id, bosses.id, gathers.id, commons.id
   FROM temp_character_ascension_levels levels,
        character_ascension_amounts amounts,
