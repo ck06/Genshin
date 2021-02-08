@@ -26,6 +26,6 @@ VALUES ('Albedo', 5),
        ('Venti', 5),
        ('Xiangling', 4),
        ('Xiao', 5),
-       ('Xingqui', 4),
+       ('Xingqiu', 4),
        ('Xinyan', 4),
        ('Zhongli', 5);
