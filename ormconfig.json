@@ -1,6 +1,5 @@
 {
   "type": "sqlite",
-  "name": "Genshin",
   "database": "src/Infrastructure/Database/Genshin.db",
   "entities": [
     "dist/Infrastructure/Database/Entities/*.entity.js"

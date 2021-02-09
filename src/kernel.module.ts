@@ -3,10 +3,10 @@ import { LevelModule } from './Modules/level.module';
 import { TalentModule } from './Modules/talent.module';
 import { WeaponModule } from './Modules/weapon.module';
 import { DatabaseModule } from './Modules/database.module';
-import { Connection } from 'typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    imports: [DatabaseModule, LevelModule, TalentModule, WeaponModule],
+    imports: [LevelModule, TalentModule, WeaponModule, TypeOrmModule.forRoot(), DatabaseModule],
     controllers: [],
     providers: [],
 })
