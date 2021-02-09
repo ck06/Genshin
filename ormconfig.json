@@ -1,0 +1,19 @@
+{
+  "type": "sqlite",
+  "name": "Genshin",
+  "database": "src/Infrastructure/Database/Genshin.db",
+  "entities": [
+    "dist/Infrastructure/Database/Entities/*.entity.js"
+  ],
+  "autoLoadEntities": true,
+  "migrations": [
+    "dist/Infrastructure/Database/Migrations/*.migration.js"
+  ],
+  "migrationsTableName": "_migrations",
+  "migrationsTransactionMode": "all",
+  "synchronize": false,
+  "cli": {
+    "entitiesDir": "src/Infrastructure/Data/Entities/",
+    "migrationsDir": "src/Infrastructure/Data/Queries/"
+  }
+}
