@@ -18,18 +18,21 @@ CREATE TABLE character_ascension_details (
   common_quality INTEGER CHECK (gem_quality IN (1, 2, 3, 4, 5)),
   mora           INTEGER DEFAULT 0,
   FOREIGN KEY (gem_quality) REFERENCES quality (id),
+  FOREIGN KEY (boss_quality) REFERENCES quality (id),
+  FOREIGN KEY (gather_quality) REFERENCES quality (id),
   FOREIGN KEY (common_quality) REFERENCES quality (id)
 );
 
 DROP TABLE IF EXISTS character_ascension;
 CREATE TABLE character_ascension (
+  id        INTEGER PRIMARY KEY,
   character INTEGER NOT NULL,
   level     INTEGER CHECK ( level IN (20, 40, 50, 60, 70, 80) ),
   gem       INTEGER NOT NULL,
   boss      INTEGER NULL, -- must be nullable for the Traveler.
   gather    INTEGER NOT NULL,
   common    INTEGER NOT NULL,
-  PRIMARY KEY (character, level),
+  UNIQUE (character, level),
   FOREIGN KEY (character) REFERENCES characters (id),
   FOREIGN KEY (level) REFERENCES character_ascension_details (level),
   FOREIGN KEY (gem) REFERENCES items (id),
@@ -56,13 +59,14 @@ CREATE TABLE character_talent_ascension_details (
 
 DROP TABLE IF EXISTS character_talent_ascension;
 CREATE TABLE character_talent_ascension (
+  id        INTEGER PRIMARY KEY,
   character INTEGER NOT NULL,
   level     INTEGER CHECK (level IN (1, 2, 3, 4, 5, 6, 7, 8, 9)),
   book      INTEGER NOT NULL,
   common    INTEGER NOT NULL,
   weekly    INTEGER NOT NULL,
   crown     INTEGER NOT NULL,
-  PRIMARY KEY (character, level),
+  UNIQUE (character, level),
   FOREIGN KEY (level) REFERENCES character_talent_ascension_details (level),
   FOREIGN KEY (book) REFERENCES items (id),
   FOREIGN KEY (common) REFERENCES items (id),

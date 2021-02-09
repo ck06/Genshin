@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ItemType } from './item_type.entity';
+import { Quality } from './quality.entity';
 
 @Entity({ name: 'items' })
 export class Item {
@@ -9,8 +10,8 @@ export class Item {
     @Column()
     name: string;
 
-    @Column()
-    quality: number;
+    @ManyToOne(() => Quality, (quality) => quality.items)
+    quality: Quality;
 
     @ManyToOne(() => ItemType)
     type: ItemType;
