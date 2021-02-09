@@ -4,8 +4,8 @@ import { Item } from '../Infrastructure/Database/Entities/item.entity';
 import { ItemType } from '../Infrastructure/Database/Entities/item_type.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Item, ItemType])],
+    imports: [TypeOrmModule.forFeature([Item, ItemType], 'SQLite')],
     controllers: [],
     providers: [],
 })
-export class DatabaseModule {}
+export class EntityRepositoryModule {}

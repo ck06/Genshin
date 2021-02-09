@@ -1,5 +1,7 @@
 {
+  "comment" : "This database configuration is for CLI usage and should be avoided in code.",
   "type": "sqlite",
+  "name": "default",
   "database": "src/Infrastructure/Database/Genshin.db",
   "entities": [
     "dist/Infrastructure/Database/Entities/*.entity.js"
