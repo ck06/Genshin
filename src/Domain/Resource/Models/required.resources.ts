@@ -16,11 +16,11 @@ export default class RequiredResources {
     mora: AbstractResource = new Mora();
     gather: AbstractResource = new GatheredItem();
     experienceBook: AbstractResource[] = [
-        new ExperienceBook(0, 1),
-        new ExperienceBook(0, 2),
-        new ExperienceBook(0, 3),
-        new ExperienceBook(0, 4),
-        new ExperienceBook(0, 5),
+        new ExperienceBook('', 0, 1),
+        new ExperienceBook('', 0, 2),
+        new ExperienceBook('', 0, 3),
+        new ExperienceBook('', 0, 4),
+        new ExperienceBook('', 0, 5),
     ];
     experienceOre: AbstractResource[] = [
         new ExperienceOre('', 0, 1),
