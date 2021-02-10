@@ -5,9 +5,12 @@ import { RequiredResourcesConverter } from '../Domain/Resource/Converters/requir
 import { QualityConverter } from '../Infrastructure/Converters/quality.converter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Weapon } from '../Infrastructure/Database/Entities/weapon.entity';
+import { Item } from '../Infrastructure/Database/Entities/item.entity';
+import { ItemType } from '../Infrastructure/Database/Entities/item_type.entity';
+import { Quality } from '../Infrastructure/Database/Entities/quality.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Weapon], 'SQLite')],
+  imports: [TypeOrmModule.forFeature([Item, ItemType, Quality, Weapon], 'SQLite')],
   controllers: [WeaponController],
   providers: [WeaponCalculator, RequiredResourcesConverter, QualityConverter],
 })
