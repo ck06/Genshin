@@ -19,10 +19,10 @@ export class LevelCalculator {
             for (let requiredExp = CharacterLevelRequirements.EXP_TO_LEVEL[i], quality = 4; quality > 1; quality--) {
                 let books = Math.floor(requiredExp / CharacterLevelRequirements.EXP_PER_BOOK[quality]);
                 requiredExp %= CharacterLevelRequirements.EXP_PER_BOOK[quality];
-                totals.addResource(new ExperienceBook(books, quality));
+                totals.addResource(new ExperienceBook('', books, quality));
 
                 if (quality === 2 && requiredExp > 0) {
-                    totals.addResource(new ExperienceBook(1, quality));
+                    totals.addResource(new ExperienceBook('', 1, quality));
                 }
             }
 

@@ -33,7 +33,7 @@ const Database = [
     TypeOrmModule.forRoot({
         type: 'sqlite',
         name: 'SQLite',
-        database: './Infrastructure/Database/Genshin.db',
+        database: 'src/Infrastructure/Database/Genshin.db',
         autoLoadEntities: true,
         migrations: ['src/Infrastructure/Database/Migrations/*.migration.js'],
         migrationsTableName: '_migrations',
