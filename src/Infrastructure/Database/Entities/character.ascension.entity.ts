@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { Quality } from './quality.entity';
+import { Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Item } from './item.entity';
 import { Character } from './character.entity';
 import { CharacterAscensionDetails } from './character.ascension.details.entity';
 
@@ -12,32 +12,17 @@ export class CharacterAscension {
     character: Character;
 
     @ManyToOne(() => CharacterAscensionDetails)
-    level: CharacterAscensionDetails;
+    details: CharacterAscensionDetails;
 
-    @Column()
-    gemAmount: number;
+    @ManyToOne(() => Item)
+    gem: Item;
 
-    @ManyToOne(() => Quality)
-    gemQuality: Quality;
+    @ManyToOne(() => Item)
+    boss: Item;
 
-    @Column()
-    bossAmount: number;
+    @ManyToOne(() => Item)
+    gather: Item;
 
-    @ManyToOne(() => Quality)
-    bossQuality: Quality;
-
-    @Column()
-    gatherAmount: number;
-
-    @ManyToOne(() => Quality)
-    gatherQuality: Quality;
-
-    @Column()
-    commonAmount: number;
-
-    @ManyToOne(() => Quality)
-    commonQuality: Quality;
-
-    @Column()
-    mora: number;
+    @ManyToOne(() => Item)
+    common: Item;
 }

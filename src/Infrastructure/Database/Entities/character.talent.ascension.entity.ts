@@ -12,7 +12,7 @@ export class TalentAscension {
     character: Character;
 
     @ManyToOne(() => TalentAscensionDetails)
-    level: TalentAscensionDetails;
+    details: TalentAscensionDetails;
 
     @ManyToOne(() => Item)
     book: Item;

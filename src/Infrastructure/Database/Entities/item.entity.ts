@@ -13,7 +13,7 @@ export class Item {
     @ManyToOne(() => Quality, (quality) => quality.items)
     quality: Quality;
 
-    @ManyToOne(() => ItemType)
+    @ManyToOne(() => ItemType, type => type.items)
     type: ItemType;
 
     @Column()
