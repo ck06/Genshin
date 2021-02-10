@@ -26,20 +26,17 @@ export class LevelController {
       return `Levels only range ${this.MIN.toString()}~${this.MAX.toString()}`;
     }
 
+    // TODO: when implementing a commandbus, no need to check if character exists. Leave this to the handler.
     try {
       char = char.charAt(0).toUpperCase() + char.slice(1);
-      await this.characterRepository.findOneOrFail({ where: { name: char } });
+      const charId = (await this.characterRepository.findOneOrFail({ where: { name: char } })).id;
+      return JSON.stringify(
+        this.resourceConverter.toSortedObject(
+          await this.levelCalculator.calculate(charId, start, end),
+        ),
+      );
     } catch {
       return `Character with the name ${char} could not be found.`;
     }
-
-    return JSON.stringify(
-      this.resourceConverter.toSortedObject(await this.levelCalculator.calculate(char, start, end)),
-    );
-  }
-
-  @Get('/chars/')
-  async getAllCharacters() {
-    return JSON.stringify(await this.characterRepository.find({ where: { quality: 5 } }));
   }
 }

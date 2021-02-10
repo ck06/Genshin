@@ -26,33 +26,36 @@ export class LevelCalculator {
     ) {}
 
     public async calculate(
-      characterName: string,
+      characterId: number,
       start: number,
       end: number,
     ): Promise<RequiredResources> {
         const TOTALS = new RequiredResources();
         const EXP_PER_LEVEL = [...(await this.experienceRepository.find())].map((exp) => exp.expToNext);
-        const EXP_BOOKS = (await this.itemTypeRepository.findOne({ where: { inCode: 'books' } })).items;
+        const EXP_BOOKS = await (await this.itemTypeRepository.findOne({
+            relations: ["items"],
+            where: {inCode: 'experienceBook'},
+        })).items;
         const ASCENSIONS = [
             ...(await this.ascensionRepository.find({
-                where: { character: characterName },
+                where: { character: characterId },
                 order: { details: 'ASC' },
             })),
         ];
 
         let cumulativeExp = 0;
-        for (let i = start; i < end; i++) {
-            TOTALS.addResource(new Mora(EXP_PER_LEVEL[i] * constants.MORA_PER_CHARACTER_EXP));
-            cumulativeExp += EXP_PER_LEVEL[i];
+        for (let currentLevel = start; currentLevel < end; currentLevel++) {
+            TOTALS.addResource(new Mora(EXP_PER_LEVEL[currentLevel] * constants.MORA_PER_CHARACTER_EXP));
+            cumulativeExp += EXP_PER_LEVEL[currentLevel];
 
-            if (constants.ASCENSION_LEVELS.includes(i)) {
+            if (constants.ASCENSION_LEVELS.includes(currentLevel)) {
                 this.calculateExperience(cumulativeExp, EXP_BOOKS).forEach((book) => {
                     TOTALS.addResource(book);
                 });
 
                 let characterAscension: CharacterAscension;
                 for (let ascension of ASCENSIONS) {
-                    if (ascension.details.level == i) {
+                    if (ascension.details.level == currentLevel) {
                         characterAscension = ascension;
                         break;
                     }

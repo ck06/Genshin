@@ -2,9 +2,9 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class CharacterExperience {
-    @PrimaryColumn()
-    level: number;
+  @PrimaryColumn()
+  level: number;
 
-    @Column()
-    expToNext: number;
+  @Column({ name: 'exp_to_next' })
+  expToNext: number;
 }

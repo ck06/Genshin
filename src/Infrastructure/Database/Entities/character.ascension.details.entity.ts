@@ -1,35 +1,39 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Quality } from './quality.entity';
 
-@Entity()
+@Entity('character_ascension_details')
 export class CharacterAscensionDetails {
-    @PrimaryColumn()
-    level: number;
+  @PrimaryColumn({ name: 'level', type: 'integer', unique: true })
+  level: number;
 
-    @Column()
-    gemAmount: number;
+  @Column({ name: 'gem_amount', type: 'integer' })
+  gemAmount: number;
 
-    @ManyToOne(() => Quality)
-    gemQuality: Quality;
+  @ManyToOne(() => Quality, {eager: true})
+  @JoinColumn({ name: 'gem_quality' })
+  gemQuality: Quality;
 
-    @Column()
-    bossAmount: number;
+  @Column({ name: 'boss_amount', type: 'integer' })
+  bossAmount: number;
 
-    @ManyToOne(() => Quality)
-    bossQuality: Quality;
+  @ManyToOne(() => Quality, {eager: true})
+  @JoinColumn({ name: 'boss_quality' })
+  bossQuality: Quality;
 
-    @Column()
-    gatherAmount: number;
+  @Column({ name: 'gather_amount', type: 'integer' })
+  gatherAmount: number;
 
-    @ManyToOne(() => Quality)
-    gatherQuality: Quality;
+  @ManyToOne(() => Quality, {eager: true})
+  @JoinColumn({ name: 'gather_quality' })
+  gatherQuality: Quality;
 
-    @Column()
-    commonAmount: number;
+  @Column({ name: 'common_amount', type: 'integer' })
+  commonAmount: number;
 
-    @ManyToOne(() => Quality)
-    commonQuality: Quality;
+  @ManyToOne(() => Quality, {eager: true})
+  @JoinColumn({ name: 'common_quality' })
+  commonQuality: Quality;
 
-    @Column()
-    mora: number;
+  @Column()
+  mora: number;
 }
