@@ -33,7 +33,7 @@ export class LevelController {
       charId = (
         await this.characterRepository
           .createQueryBuilder()
-          .where('LOWER(name) = LOWER(:name)', { char })
+          .where('LOWER(name) = LOWER(:name)', { name: char })
           .getOneOrFail()
       ).id;
     } catch {
