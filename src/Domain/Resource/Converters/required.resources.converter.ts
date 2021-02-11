@@ -40,7 +40,7 @@ export class RequiredResourcesConverter {
         let sortedObject: Record<string, number> = {};
 
         resources.experienceOre.forEach((crystal: ExperienceOre) => {
-            if (crystal.amount > 0) {
+            if(crystal && crystal.amount> 0) {
                 const quality = QualityConverter.getStringForQuality(crystal.quality);
                 const name =
                     crystal.name !== '' ? crystal.name : zprintf('%s (%s, %s)', 'EXP Shard', 'weapon', quality);
@@ -50,7 +50,7 @@ export class RequiredResourcesConverter {
         });
 
         resources.experienceBook.forEach((book: ExperienceBook) => {
-            if (book.amount > 0) {
+            if(book && book.amount> 0) {
                 const quality = QualityConverter.getStringForQuality(book.quality);
                 const name =
                     book.name !== ''
@@ -62,7 +62,7 @@ export class RequiredResourcesConverter {
         });
 
         resources.talentBook.forEach((book: TalentBook) => {
-            if (book.amount > 0) {
+            if(book && book.amount> 0) {
                 const quality = QualityConverter.getStringForQuality(book.quality);
                 const name =
                     book.name !== ''
@@ -73,13 +73,13 @@ export class RequiredResourcesConverter {
             }
         });
 
-        if (resources.gather.amount > 0) {
+        if(resources.gather && resources.gather.amount > 0) {
             sortedObject[resources.gather.name !== '' ? resources.gather.name : 'Gather item'] =
                 resources.gather.amount;
         }
 
         resources.gems.forEach((gem: ElementalGem) => {
-            if (gem.amount > 0) {
+            if(gem && gem.amount> 0) {
                 const quality = QualityConverter.getStringForQuality(gem.quality);
                 const name =
                     gem.name !== '' ? gem.name + zprintf(' (%s)', quality) : zprintf('%s (%s)', 'Gems', quality);
@@ -89,7 +89,7 @@ export class RequiredResourcesConverter {
         });
 
         resources.domain.forEach((domain: DomainDrop) => {
-            if (domain.amount > 0) {
+            if(domain && domain.amount> 0) {
                 const quality = QualityConverter.getStringForQuality(domain.quality);
                 const name =
                     domain.name !== ''
@@ -101,7 +101,7 @@ export class RequiredResourcesConverter {
         });
 
         resources.common.forEach((common: CommonEnemyDrop) => {
-            if (common.amount > 0) {
+            if(common && common.amount> 0) {
                 const quality = QualityConverter.getStringForQuality(common.quality);
                 const name =
                     common.name !== ''
@@ -113,7 +113,7 @@ export class RequiredResourcesConverter {
         });
 
         resources.elite.forEach((elite: DailyEnemyDrop) => {
-            if (elite.amount > 0) {
+            if(elite && elite.amount> 0) {
                 const quality = QualityConverter.getStringForQuality(elite.quality);
                 const name =
                     elite.name !== ''
@@ -124,12 +124,12 @@ export class RequiredResourcesConverter {
             }
         });
 
-        if (resources.boss.amount > 0) {
+        if(resources.boss && resources.boss.amount > 0) {
             const name = resources.boss.name !== '' ? resources.boss.name + '(weekly)' : 'Drops (weekly)';
             sortedObject[name] = resources.boss.amount;
         }
 
-        if (resources.crown.amount > 0) {
+        if(resources.crown && resources.crown.amount > 0) {
             // crown name is hardcoded
             sortedObject[resources.crown.name] = resources.crown.amount;
         }

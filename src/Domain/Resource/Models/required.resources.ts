@@ -13,147 +13,115 @@ import TalentBook from '../../../Infrastructure/Models/Materials/Domain/talent.b
 import DomainDrop from '../../../Infrastructure/Models/Materials/Domain/domain';
 
 export default class RequiredResources {
-    mora: AbstractResource = new Mora();
-    gather: AbstractResource = new GatheredItem();
-    experienceBook: AbstractResource[] = [
-        new ExperienceBook('', 0, 1),
-        new ExperienceBook('', 0, 2),
-        new ExperienceBook('', 0, 3),
-        new ExperienceBook('', 0, 4),
-        new ExperienceBook('', 0, 5),
-    ];
-    experienceOre: AbstractResource[] = [
-        new ExperienceOre('', 0, 1),
-        new ExperienceOre('', 0, 2),
-        new ExperienceOre('', 0, 3),
-        new ExperienceOre('', 0, 4),
-        new ExperienceOre('', 0, 5),
-    ];
-    talentBook: AbstractResource[] = [
-        new TalentBook('', 0, 1),
-        new TalentBook('', 0, 2),
-        new TalentBook('', 0, 3),
-        new TalentBook('', 0, 4),
-        new TalentBook('', 0, 5),
-    ];
-    gems: AbstractResource[] = [
-        new ElementalGem('', 0, 1),
-        new ElementalGem('', 0, 2),
-        new ElementalGem('', 0, 3),
-        new ElementalGem('', 0, 4),
-        new ElementalGem('', 0, 5),
-    ];
-    domain: AbstractResource[] = [
-        new DomainDrop('', 0, 1),
-        new DomainDrop('', 0, 2),
-        new DomainDrop('', 0, 3),
-        new DomainDrop('', 0, 4),
-        new DomainDrop('', 0, 5),
-    ];
-    common: AbstractResource[] = [
-        new CommonEnemyDrop('', 0, 1),
-        new CommonEnemyDrop('', 0, 2),
-        new CommonEnemyDrop('', 0, 3),
-        new CommonEnemyDrop('', 0, 4),
-        new CommonEnemyDrop('', 0, 5),
-    ];
-    elite: AbstractResource[] = [
-        new DailyEnemyDrop('', 0, 1),
-        new DailyEnemyDrop('', 0, 2),
-        new DailyEnemyDrop('', 0, 3),
-        new DailyEnemyDrop('', 0, 4),
-        new DailyEnemyDrop('', 0, 5),
-    ];
-    boss: AbstractResource = new ResinEnemyDrop('', 0);
-    weekly: AbstractResource = new WeeklyEnemyDrop('', 0);
-    crown: AbstractResource = new Crown();
+  mora: AbstractResource = new Mora();
+  gather: AbstractResource;
+  experienceBook: AbstractResource[] = [];
+  experienceOre: AbstractResource[] = [];
+  talentBook: AbstractResource[] = [];
+  gems: AbstractResource[] = [];
+  domain: AbstractResource[] = [];
+  common: AbstractResource[] = [];
+  elite: AbstractResource[] = [];
+  boss: AbstractResource;
+  weekly: AbstractResource;
+  crown: AbstractResource;
 
-    public constructor(whatToLevel = '') {
-        // TODO: make something to actually determine this.
-        // It should work based on character name at first,
-        // and later be expanded to include weapon names.
+  public addResource(resource: AbstractResource) {
+    const name = resource.name;
+    const amount = resource.amount;
+    const quality = resource.quality;
+
+    if (resource instanceof Mora) {
+      this.addMora(amount);
+    } else if (resource instanceof GatheredItem) {
+      this.addGatherItems(name, amount, quality);
+    } else if (resource instanceof ResinEnemyDrop) {
+      this.addResinItems(name, amount, quality);
+    } else if (resource instanceof WeeklyEnemyDrop) {
+      this.addWeeklyItems(name, amount, quality);
+    } else if (resource instanceof Crown) {
+      this.addCrown(name, amount, quality);
+    } else if (resource instanceof ExperienceBook) {
+      this.addExperienceBooks(name, amount, quality);
+    } else if (resource instanceof ExperienceOre) {
+      this.addExperienceOre(name, amount, quality);
+    } else if (resource instanceof TalentBook) {
+      this.addTalentBooks(name, amount, quality);
+    } else if (resource instanceof ElementalGem) {
+      this.addGems(name, amount, quality);
+    } else if (resource instanceof DomainDrop) {
+      this.addDomainItems(name, amount, quality);
+    } else if (resource instanceof CommonEnemyDrop) {
+      this.addCommonItems(name, amount, quality);
+    } else if (resource instanceof DailyEnemyDrop) {
+      this.addEliteItems(name, amount, quality);
     }
+  }
 
-    public addResource(resource: AbstractResource) {
-        // until names are implemented, these only care about the amount.
-        const amount = resource.amount;
-        if (resource instanceof Mora) {
-            this.addMora(amount);
-        } else if (resource instanceof GatheredItem) {
-            this.addGatherItems(amount);
-        } else if (resource instanceof ResinEnemyDrop) {
-            this.addResinItems(amount);
-        } else if (resource instanceof WeeklyEnemyDrop) {
-            this.addWeeklyItems(amount);
-        } else if (resource instanceof Crown) {
-            // crown is unique in that you only ever need 1, if any.
-            this.addCrown(amount);
-        }
+  private addMora(amount: number) {
+    this.mora.add(amount);
+  }
 
-        // the remaining items however require quality + amount
-        const index = resource.quality - 1;
-        if (resource instanceof ExperienceBook) {
-            this.addExperienceBooks(index, amount);
-        } else if (resource instanceof ExperienceOre) {
-            this.addExperienceOre(index, amount);
-        } else if (resource instanceof TalentBook) {
-            this.addTalentBooks(index, amount);
-        } else if (resource instanceof ElementalGem) {
-            this.addGems(index, amount);
-        } else if (resource instanceof DomainDrop) {
-            this.addDomainItems(index, amount);
-        } else if (resource instanceof CommonEnemyDrop) {
-            this.addCommonItems(index, amount);
-        } else if (resource instanceof DailyEnemyDrop) {
-            this.addEliteItems(index, amount);
-        }
-    }
+  private addGatherItems(name: string, amount: number, quality: number) {
+    !this.gather
+      ? (this.gather = new GatheredItem(name, amount, quality))
+      : this.gather.add(amount);
+  }
 
-    private addMora(amount: number) {
-        this.mora.add(amount);
-    }
+  private addExperienceBooks(name: string, amount: number, quality: number) {
+    !this.experienceBook[quality]
+      ? (this.experienceBook[quality] = new ExperienceBook(name, amount, quality))
+      : this.experienceBook[quality].add(amount);
+  }
 
-    private addGatherItems(amount: number) {
-        this.gather.add(amount);
-    }
+  private addExperienceOre(name: string, amount: number, quality: number) {
+    !this.experienceOre[quality]
+      ? (this.experienceOre[quality] = new ExperienceOre(name, amount, quality))
+      : this.experienceOre[quality].add(amount);
+  }
 
-    private addExperienceBooks(index: number, amount: number) {
-        this.experienceBook[index].add(amount);
-    }
+  private addTalentBooks(name: string, amount: number, quality: number) {
+    !this.talentBook[quality]
+      ? (this.talentBook[quality] = new TalentBook(name, amount, quality))
+      : this.talentBook[quality].add(amount);
+  }
 
-    private addExperienceOre(index: number, amount: number) {
-        this.experienceOre[index].add(amount);
-    }
+  private addGems(name: string, amount: number, quality: number) {
+    !this.gems[quality]
+      ? (this.gems[quality] = new ElementalGem(name, amount, quality))
+      : this.gems[quality].add(amount);
+  }
 
-    private addTalentBooks(index: number, amount: number) {
-        this.talentBook[index].add(amount);
-    }
+  private addDomainItems(name: string, amount: number, quality: number) {
+    !this.domain[quality]
+      ? (this.domain[quality] = new DomainDrop(name, amount, quality))
+      : this.domain[quality].add(amount);
+  }
 
-    private addGems(index: number, amount: number) {
-        this.gems[index].add(amount);
-    }
+  private addCommonItems(name: string, amount: number, quality: number) {
+    !this.common[quality]
+      ? (this.common[quality] = new CommonEnemyDrop(name, amount, quality))
+      : this.common[quality].add(amount);
+  }
 
-    private addDomainItems(index: number, amount: number) {
-        this.domain[index].add(amount);
-    }
+  private addEliteItems(name: string, amount: number, quality: number) {
+    !this.elite[quality]
+      ? (this.elite[quality] = new DailyEnemyDrop(name, amount, quality))
+      : this.elite[quality].add(amount);
+  }
 
-    private addCommonItems(index: number, amount: number) {
-        this.common[index].add(amount);
-    }
+  private addResinItems(name: string, amount: number, quality: number) {
+    !this.boss ? (this.boss = new ResinEnemyDrop(name, amount, quality)) : this.boss.add(amount);
+  }
 
-    private addEliteItems(index: number, amount: number) {
-        this.elite[index].add(amount);
-    }
+  private addWeeklyItems(name: string, amount: number, quality: number) {
+    !this.weekly
+      ? (this.weekly = new WeeklyEnemyDrop(name, amount, quality))
+      : this.weekly.add(amount);
+  }
 
-    private addResinItems(amount: number) {
-        this.boss.add(amount);
-    }
-
-    private addWeeklyItems(amount: number) {
-        this.weekly.add(amount);
-    }
-
-    private addCrown(amount: number) {
-        this.crown.add(amount);
-    }
+  // technically an Event item, but I'm leaving it as Crown until another item pops up.
+  private addCrown(name: string, amount: number, quality: number) {
+    this.crown = new Crown(name, amount, quality);
+  }
 }

@@ -19,7 +19,7 @@ export class TalentCalculator
             totals.addResource(new TalentBook('', amount.talentBooks, quality.talentBooks));
             totals.addResource(new CommonEnemyDrop('', amount.mobDrops, quality.mobDrops));
             totals.addResource(new WeeklyEnemyDrop('', amount.weeklyDrops, quality.weeklyDrops));
-            totals.addResource(new Crown(amount.crowns, quality.crowns));
+            totals.addResource(new Crown('', amount.crowns, quality.crowns));
             totals.addResource(new Mora(amount.mora));
         }
 

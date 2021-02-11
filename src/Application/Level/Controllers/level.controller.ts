@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Header, Param, Response } from '@nestjs/common';
 import { LevelCalculator } from '../../../Domain/Level/Calculator/level.calculator';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,6 +17,7 @@ export class LevelController {
   ) {}
 
   @Get('/char/:char/from/:start/to/:end')
+  @Header('content-type', 'application/json')
   async getXToY(
     @Param('char') char: string,
     @Param('start') start: number,
@@ -27,16 +28,22 @@ export class LevelController {
     }
 
     // TODO: when implementing a commandbus, no need to check if character exists. Leave this to the handler.
+    let charId = 0;
     try {
-      char = char.charAt(0).toUpperCase() + char.slice(1);
-      const charId = (await this.characterRepository.findOneOrFail({ where: { name: char } })).id;
-      return JSON.stringify(
-        this.resourceConverter.toSortedObject(
-          await this.levelCalculator.calculate(charId, start, end),
-        ),
-      );
+      charId = (
+        await this.characterRepository
+          .createQueryBuilder()
+          .where('LOWER(name) = LOWER(:name)', { char })
+          .getOneOrFail()
+      ).id;
     } catch {
       return `Character with the name ${char} could not be found.`;
     }
+
+    return JSON.stringify(
+      this.resourceConverter.toSortedObject(
+        await this.levelCalculator.calculate(charId, start, end),
+      ),
+    );
   }
 }
