@@ -44,15 +44,20 @@ export class LevelCalculator {
         ];
 
         let cumulativeExp = 0;
-        for (let currentLevel = start; currentLevel < end; currentLevel++) {
-            TOTALS.addResource(new Mora(EXP_PER_LEVEL[currentLevel] * constants.MORA_PER_CHARACTER_EXP));
-            cumulativeExp += EXP_PER_LEVEL[currentLevel];
+        for (let currentLevel = start; currentLevel <= end; currentLevel++) {
+            TOTALS.addResource(new Mora(EXP_PER_LEVEL[currentLevel-1] * constants.MORA_PER_CHARACTER_EXP));
+            cumulativeExp += EXP_PER_LEVEL[currentLevel-1];
+
+            // experience is separate since it has to go past max ascension.
+            if (currentLevel == end || constants.ASCENSION_LEVELS.includes(currentLevel)) {
+              this.calculateExperience(cumulativeExp, EXP_BOOKS).forEach((book) => {
+                TOTALS.addResource(book);
+              });
+
+              cumulativeExp = 0;
+            }
 
             if (constants.ASCENSION_LEVELS.includes(currentLevel)) {
-                this.calculateExperience(cumulativeExp, EXP_BOOKS).forEach((book) => {
-                    TOTALS.addResource(book);
-                });
-
                 let characterAscension: CharacterAscension;
                 for (let ascension of ASCENSIONS) {
                     if (ascension.details.level == currentLevel) {
@@ -108,13 +113,13 @@ export class LevelCalculator {
             }
 
             if (currentBook instanceof Item) {
+                // determine books required
                 let amount = Math.floor(exp / Number(currentBook.details));
                 exp %= Number(currentBook.details);
-                totalBooks.push(new ExperienceBook(currentBook.name, amount, quality));
 
-                if (quality === 2 && exp > 0) {
-                    totalBooks.push(new ExperienceBook(currentBook.name, 1, quality));
-                }
+                // the last little bit always needs 1 quality 2 book extra (wiki deals with it via mob exp)
+                amount += Number(quality === 2);
+                totalBooks.push(new ExperienceBook(currentBook.name, amount, quality));
             }
         }
 

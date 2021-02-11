@@ -27,7 +27,6 @@ export class LevelController {
       return `Levels only range ${this.MIN.toString()}~${this.MAX.toString()}`;
     }
 
-    // TODO: when implementing a commandbus, no need to check if character exists. Leave this to the handler.
     let charId = 0;
     try {
       charId = (
@@ -45,5 +44,11 @@ export class LevelController {
         await this.levelCalculator.calculate(charId, start, end),
       ),
     );
+  }
+
+  @Get('/char/:char/')
+  @Header('content-type', 'application/json')
+  async getCharacter(@Param('char') char: string): Promise<string> {
+    return this.getXToY(char, this.MIN, this.MAX);
   }
 }
