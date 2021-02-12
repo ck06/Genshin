@@ -13,8 +13,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       migrationsTransactionMode: 'all',
       synchronize: false,
       cli: {
-        entitiesDir: './Infrastructure/Data/Entities/',
-        migrationsDir: './Infrastructure/Data/Queries/',
+        entitiesDir: './Infrastructure/Database/Entities',
+        migrationsDir: './Infrastructure/Database/Queries',
       },
     }),
   ],

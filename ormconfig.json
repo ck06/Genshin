@@ -14,7 +14,7 @@
   "migrationsTransactionMode": "all",
   "synchronize": false,
   "cli": {
-    "entitiesDir": "src/Infrastructure/Data/Entities/",
-    "migrationsDir": "src/Infrastructure/Data/Queries/"
+    "entitiesDir": "src/Infrastructure/Database/Entities",
+    "migrationsDir": "src/Infrastructure/Database/Migrations"
   }
 }
