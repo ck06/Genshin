@@ -19,4 +19,9 @@ export class Quality {
 
     @OneToMany(() => Weapon, (weapon) => weapon.quality)
     weapons: Weapon[];
+
+    public constructor(id: number, color: string) {
+        this.id = id;
+        this.color = color;
+    }
 }

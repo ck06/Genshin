@@ -19,7 +19,7 @@ VALUES (1, 'experienceOre', 'Weapon EXP Material'),
        (6, 'gems', 'Jewels'),
        (7, 'common', 'Common Materials'),
        (8, 'elite', 'Weapon Secondary Materials'),
-       (9, 'boss', 'Elemental Stones'),
+       (9, 'resin', 'Elemental Stones'),
 
        -- These are handled separately in the code, so they require their own types.
        (10, 'weekly', 'Talent Level-Up Materials'),

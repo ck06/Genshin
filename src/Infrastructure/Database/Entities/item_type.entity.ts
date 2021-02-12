@@ -14,4 +14,10 @@ export class ItemType {
 
   @OneToMany(() => Item, (item) => item.type)
   items: Promise<Item[]>;
+
+  public constructor(id: number, inCode: string, inData: string) {
+    this.id = id;
+    this.inCode = inCode;
+    this.inData = inData;
+  }
 }
