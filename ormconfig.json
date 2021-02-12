@@ -8,7 +8,7 @@
   ],
   "autoLoadEntities": true,
   "migrations": [
-    "dist/Infrastructure/Database/Migrations/*.migration.js"
+    "dist/Infrastructure/Database/Migrations/*-*.js"
   ],
   "migrationsTableName": "_migrations",
   "migrationsTransactionMode": "all",

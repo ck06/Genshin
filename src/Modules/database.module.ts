@@ -8,9 +8,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       name: 'SQLite',
       database: 'src/Infrastructure/Database/Genshin.db',
       autoLoadEntities: true,
-      migrations: ['src/Infrastructure/Database/Migrations/*.migration.js'],
+      migrations: ['dist/Infrastructure/Database/Migrations/*-*.js'],
       migrationsTableName: '_migrations',
-      migrationsTransactionMode: 'all',
+      migrationsTransactionMode: 'each',
+      migrationsRun: true,
       synchronize: false,
       cli: {
         entitiesDir: './Infrastructure/Database/Entities',
