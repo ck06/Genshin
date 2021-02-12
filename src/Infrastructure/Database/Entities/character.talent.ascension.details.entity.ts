@@ -1,29 +1,32 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Quality } from './quality.entity';
+import { Character } from "./character.entity";
 
-@Entity()
+@Entity('character_talent_ascension_details')
 export class TalentAscensionDetails {
-    @PrimaryColumn()
-    level: number;
+  @PrimaryColumn()
+  level: number;
 
-    @Column()
-    bookAmount: number;
+  @Column({name: 'book_amount'})
+  bookAmount: number;
 
-    @ManyToOne(() => Quality)
-    bookQuality: Quality;
+  @ManyToOne(() => Quality, { eager: true })
+  @JoinColumn({ name: 'book_quality' })
+  bookQuality: Quality;
 
-    @Column()
-    commonAmount: number;
+  @Column({name: 'common_amount'})
+  commonAmount: number;
 
-    @ManyToOne(() => Quality)
-    commonQuality: Quality;
+  @ManyToOne(() => Quality, { eager: true })
+  @JoinColumn({ name: 'common_quality' })
+  commonQuality: Quality;
 
-    @Column()
-    weeklyAmount: number;
+  @Column({name: 'weekly_amount'})
+  weeklyAmount: number;
 
-    @Column()
-    crown: boolean;
+  @Column()
+  crown: boolean;
 
-    @Column()
-    mora: number;
+  @Column()
+  mora: number;
 }

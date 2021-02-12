@@ -1,51 +1,52 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Header, Param } from '@nestjs/common';
 import { TalentCalculator } from '../../../Domain/Talent/Calculator/talent.calculator';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Character } from '../../../Infrastructure/Database/Entities/character.entity';
+import { Repository } from 'typeorm';
 
 @Controller()
 export class TalentController {
-    private readonly MIN = 1;
-    private readonly MAX = 10;
+  private readonly MIN = 1;
+  private readonly MAX = 10;
 
-    constructor(
-        private readonly talentCalculator: TalentCalculator,
-        private readonly resourceConverter: RequiredResourcesConverter,
-    ) {}
+  constructor(
+    @InjectRepository(Character, 'SQLite') private characterRepository: Repository<Character>,
+    private readonly talentCalculator: TalentCalculator,
+    private readonly resourceConverter: RequiredResourcesConverter,
+  ) {}
 
-    @Get('/talent/from/:start/to/:end')
-    getXToY(@Param('start') start: number, @Param('end') end: number): string {
-        if (end > this.MAX || start < this.MIN) {
-            throw Error(`talents only range ${this.MIN.toString()}~${this.MAX.toString()}`);
-        }
-
-        return JSON.stringify(
-            this.resourceConverter.toSortedObject(this.talentCalculator.calculate(start, end)),
-        );
+  @Get('/talent/:char/from/:start/to/:end')
+  @Header('content-type', 'application/json')
+  async getXToY(
+    @Param('char') char: string,
+    @Param('start') start: number,
+    @Param('end') end: number,
+  ): Promise<string> {
+    if (end > this.MAX || start < this.MIN) {
+      throw Error(`talents only range ${this.MIN.toString()}~${this.MAX.toString()}`);
     }
 
-    @Get('/talent/to/:end')
-    getToY(@Param('end') end: number): string {
-        return this.getXToY(this.MIN, end);
+    let charId = 0;
+    try {
+      charId = (
+        await this.characterRepository
+          .createQueryBuilder()
+          .where('LOWER(name) = LOWER(:name)', { name: char })
+          .getOneOrFail()
+      ).id;
+    } catch {
+      return `Character with the name ${char} could not be found.`;
     }
 
-    @Get('/talent/from/:start')
-    GetFromX(@Param('start') start: number): string {
-        return this.getXToY(start, this.MAX);
-    }
+    return JSON.stringify(
+      this.resourceConverter.toSortedObject(await this.talentCalculator.calculate(charId, start, end)),
+    );
+  }
 
-    @Get('/talent')
-    getMinToMax(): string {
-        return this.getXToY(this.MIN, this.MAX);
-    }
-
-    @Get('talent/pretty')
-    getPretty(): string {
-        return JSON.stringify(
-            this.resourceConverter.toSortedObject(
-                this.talentCalculator.calculate(this.MIN, this.MAX),
-            ),
-            null,
-            '\t',
-        );
-    }
+  @Get('/talent/:char')
+  @Header('content-type', 'application/json')
+  async getMinToMax(@Param('char') char: string): Promise<string> {
+    return this.getXToY(char, this.MIN, this.MAX);
+  }
 }

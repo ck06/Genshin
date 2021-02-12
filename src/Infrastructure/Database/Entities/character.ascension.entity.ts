@@ -3,7 +3,7 @@ import { Item } from './item.entity';
 import { Character } from './character.entity';
 import { CharacterAscensionDetails } from './character.ascension.details.entity';
 
-@Entity()
+@Entity('character_ascension')
 export class CharacterAscension {
   @PrimaryGeneratedColumn()
   id: number;

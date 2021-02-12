@@ -9,28 +9,28 @@ export class CharacterAscensionDetails {
   @Column({ name: 'gem_amount', type: 'integer' })
   gemAmount: number;
 
-  @ManyToOne(() => Quality, {eager: true})
+  @ManyToOne(() => Quality, { eager: true })
   @JoinColumn({ name: 'gem_quality' })
   gemQuality: Quality;
 
   @Column({ name: 'boss_amount', type: 'integer' })
   bossAmount: number;
 
-  @ManyToOne(() => Quality, {eager: true})
+  @ManyToOne(() => Quality, { eager: true })
   @JoinColumn({ name: 'boss_quality' })
   bossQuality: Quality;
 
   @Column({ name: 'gather_amount', type: 'integer' })
   gatherAmount: number;
 
-  @ManyToOne(() => Quality, {eager: true})
+  @ManyToOne(() => Quality, { eager: true })
   @JoinColumn({ name: 'gather_quality' })
   gatherQuality: Quality;
 
   @Column({ name: 'common_amount', type: 'integer' })
   commonAmount: number;
 
-  @ManyToOne(() => Quality, {eager: true})
+  @ManyToOne(() => Quality, { eager: true })
   @JoinColumn({ name: 'common_quality' })
   commonQuality: Quality;
 
