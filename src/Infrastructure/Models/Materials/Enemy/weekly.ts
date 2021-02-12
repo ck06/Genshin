@@ -2,7 +2,7 @@
 import AbstractResource from '../../Abstracts/abstract.resource';
 
 export default class WeeklyEnemyDrop extends AbstractResource {
-  constructor(itemName: string, amount: number, quality = 5) {
+  constructor(itemName: string, amount: number, quality: number) {
     super(itemName, amount, quality);
   }
 }

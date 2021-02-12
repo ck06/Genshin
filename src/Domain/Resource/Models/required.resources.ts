@@ -22,7 +22,7 @@ export default class RequiredResources {
   domain: AbstractResource[] = [];
   common: AbstractResource[] = [];
   elite: AbstractResource[] = [];
-  boss: AbstractResource;
+  resin: AbstractResource;
   weekly: AbstractResource;
   crown: AbstractResource;
 
@@ -111,7 +111,7 @@ export default class RequiredResources {
   }
 
   private addResinItems(name: string, amount: number, quality: number) {
-    !this.boss ? (this.boss = new ResinEnemyDrop(name, amount, quality)) : this.boss.add(amount);
+    !this.resin ? (this.resin = new ResinEnemyDrop(name, amount, quality)) : this.resin.add(amount);
   }
 
   private addWeeklyItems(name: string, amount: number, quality: number) {

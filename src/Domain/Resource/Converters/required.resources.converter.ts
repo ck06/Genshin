@@ -124,14 +124,19 @@ export class RequiredResourcesConverter {
             }
         });
 
-        if(resources.boss && resources.boss.amount > 0) {
-            const name = resources.boss.name !== '' ? resources.boss.name + '(weekly)' : 'Drops (weekly)';
-            sortedObject[name] = resources.boss.amount;
+        if(resources.resin && resources.resin.amount > 0) {
+          const name = resources.resin.name !== '' ? resources.resin.name : 'Drops (40 resin boss)';
+          sortedObject[name] = resources.resin.amount;
+        }
+  
+        if(resources.weekly && resources.weekly.amount > 0) {
+          const name = resources.weekly.name !== '' ? resources.weekly.name : 'Drops (60 resin boss)';
+          sortedObject[name] = resources.weekly.amount;
         }
 
         if(resources.crown && resources.crown.amount > 0) {
-            // crown name is hardcoded
-            sortedObject[resources.crown.name] = resources.crown.amount;
+            const name = resources.crown.name !== '' ? resources.crown.name : ' Crowns (event)';
+            sortedObject[name] = resources.crown.amount;
         }
 
         // mora is always filled, even if at 0
