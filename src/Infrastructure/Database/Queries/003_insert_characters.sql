@@ -1,4 +1,4 @@
-INSERT INTO characters (name, quality)
+INSERT INTO character (name, quality)
 VALUES ('Albedo', 5),
        ('Amber', 4),
        ('Barbara', 4),

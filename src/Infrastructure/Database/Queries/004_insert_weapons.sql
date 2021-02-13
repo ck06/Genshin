@@ -1,4 +1,4 @@
-INSERT INTO weapons (name, type, quality, source)
+INSERT INTO weapon (name, type, quality, source)
 VALUES ('Alley Hunter', 'Bow', 4, 'Gacha'),
        ('Amos'' Bow', 'Bow', 5, 'Gacha'),
        ('Blackcliff Warbow', 'Bow', 4, 'Starglitter Exchange'),
