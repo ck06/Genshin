@@ -182,5 +182,15 @@ export class createAscensionTables1613206310527 implements MigrationInterface {
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    /** DROP TABLE IF EXISTS `x` */
+    await queryRunner.dropTable('character_experience', true);
+    await queryRunner.dropTable('character_ascension_details', true);
+    await queryRunner.dropTable('character_ascension', true);
+    await queryRunner.dropTable('character_talent_ascension_details', true);
+    await queryRunner.dropTable('character_talent_ascension', true);
+    await queryRunner.dropTable('weapon_experience', true);
+    await queryRunner.dropTable('weapon_ascension_details', true);
+    await queryRunner.dropTable('weapon_ascension', true);
+  }
 }
