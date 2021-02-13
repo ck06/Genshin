@@ -8,10 +8,11 @@ import { Weapon } from '../Infrastructure/Database/Entities/weapon.entity';
 import { Item } from '../Infrastructure/Database/Entities/item.entity';
 import { ItemType } from '../Infrastructure/Database/Entities/item_type.entity';
 import { Quality } from '../Infrastructure/Database/Entities/quality.entity';
+import { WeaponExperience } from '../Infrastructure/Database/Entities/weapon.experience.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Item, ItemType, Quality, Weapon], 'SQLite')],
+  imports: [TypeOrmModule.forFeature([Item, ItemType, Quality, Weapon, WeaponExperience], 'SQLite')],
   controllers: [WeaponController],
-  providers: [WeaponCalculator, RequiredResourcesConverter, QualityConverter],
+  providers: [WeaponCalculator, RequiredResourcesConverter, QualityConverter]
 })
 export class WeaponModule {}
