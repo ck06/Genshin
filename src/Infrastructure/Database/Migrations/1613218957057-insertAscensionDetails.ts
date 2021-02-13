@@ -121,5 +121,9 @@ export class insertAscensionDetails1613218957057 implements MigrationInterface {
     }
   }
 
-  public async down(queryRunner: QueryRunner): Promise<void> {}
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.clearTable('character_ascension_details')
+    await queryRunner.clearTable('character_talent_ascension_details')
+    await queryRunner.clearTable('weapon_ascension_details')
+  }
 }
