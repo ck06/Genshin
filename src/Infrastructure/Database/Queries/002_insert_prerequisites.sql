@@ -10,7 +10,7 @@ VALUES (1, 'Grey'),
 ;
 
 -- types are ordered like documented in the RequiredResourcesConverter.
-INSERT INTO item_types (id, in_code, in_data)
+INSERT INTO item_type (id, in_code, in_data)
 VALUES (1, 'experienceOre', 'Weapon EXP Material'),
        (2, 'experienceBook', 'Character EXP Material'),
        (3, 'talentBook', 'Talent Level-Up Materials'),

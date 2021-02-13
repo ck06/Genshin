@@ -33,12 +33,12 @@ CREATE TABLE character_ascension (
   gather    INTEGER NOT NULL,
   common    INTEGER NOT NULL,
   UNIQUE (character, level),
-  FOREIGN KEY (character) REFERENCES characters (id),
+  FOREIGN KEY (character) REFERENCES character (id),
   FOREIGN KEY (level) REFERENCES character_ascension_details (level),
-  FOREIGN KEY (gem) REFERENCES items (id),
-  FOREIGN KEY (boss) REFERENCES items (id),
-  FOREIGN KEY (gather) REFERENCES items (id),
-  FOREIGN KEY (common) REFERENCES items (id)
+  FOREIGN KEY (gem) REFERENCES item (id),
+  FOREIGN KEY (boss) REFERENCES item (id),
+  FOREIGN KEY (gather) REFERENCES item (id),
+  FOREIGN KEY (common) REFERENCES item (id)
 );
 
 ---------------------------------------------------------------------------------------------
@@ -51,10 +51,12 @@ CREATE TABLE character_talent_ascension_details (
   common_amount  INTEGER DEFAULT 0,
   common_quality INTEGER CHECK (common_quality IN (1, 2, 3, 4, 5)),
   weekly_amount  INTEGER DEFAULT 0,
-  crown          BOOLEAN DEFAULT FALSE,
+  weekly_quality INTEGER CHECK (weekly_quality IN (1, 2, 3, 4, 5)),
+  needs_event    BOOLEAN DEFAULT FALSE,
   mora           INTEGER DEFAULT 0,
   FOREIGN KEY (book_quality) REFERENCES quality (id),
-  FOREIGN KEY (common_quality) REFERENCES quality (id)
+  FOREIGN KEY (common_quality) REFERENCES quality (id),
+  FOREIGN KEY (weekly_quality) REFERENCES quality (id)
 );
 
 DROP TABLE IF EXISTS character_talent_ascension;
@@ -65,13 +67,13 @@ CREATE TABLE character_talent_ascension (
   book      INTEGER NOT NULL,
   common    INTEGER NOT NULL,
   weekly    INTEGER NOT NULL,
-  crown     INTEGER NOT NULL,
+  event     INTEGER NOT NULL,
   UNIQUE (character, level),
   FOREIGN KEY (level) REFERENCES character_talent_ascension_details (level),
-  FOREIGN KEY (book) REFERENCES items (id),
-  FOREIGN KEY (common) REFERENCES items (id),
-  FOREIGN KEY (weekly) REFERENCES items (id),
-  FOREIGN KEY (crown) REFERENCES items (id)
+  FOREIGN KEY (book) REFERENCES item (id),
+  FOREIGN KEY (common) REFERENCES item (id),
+  FOREIGN KEY (weekly) REFERENCES item (id),
+  FOREIGN KEY (event) REFERENCES item (id)
 );
 
 ---------------------------------------------------------------------------------------------
@@ -107,5 +109,5 @@ CREATE TABLE weapon_ascension_details (
 DROP TABLE IF EXISTS weapon_ascension;
 CREATE TABLE weapon_ascension (
   weapon INTEGER NOT NULL PRIMARY KEY,
-  FOREIGN KEY (weapon) REFERENCES weapons (id)
+  FOREIGN KEY (weapon) REFERENCES weapon (id)
 );
