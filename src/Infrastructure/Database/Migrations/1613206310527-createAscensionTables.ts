@@ -86,7 +86,7 @@ export class createAscensionTables1613206310527 implements MigrationInterface {
           { columnNames: ['common_quality'], referencedTableName: 'quality', referencedColumnNames: ['id'] },
           { columnNames: ['weekly_quality'], referencedTableName: 'quality', referencedColumnNames: ['id'] }
         ],
-        checks: [{ columnNames: ['level'], expression: 'level in (20,40,50,60,70,80)' }]
+        checks: [{ columnNames: ['level'], expression: 'level in (1,2,3,4,5,6,7,8,9)' }]
       })
     );
 
@@ -114,7 +114,7 @@ export class createAscensionTables1613206310527 implements MigrationInterface {
           { columnNames: ['weekly'], referencedTableName: 'item', referencedColumnNames: ['id'] },
           { columnNames: ['event'], referencedTableName: 'item', referencedColumnNames: ['id'] }
         ],
-        checks: [{ columnNames: ['level'], expression: 'level in (20,40,50,60,70,80)' }]
+        checks: [{ columnNames: ['level'], expression: 'level in (1,2,3,4,5,6,7,8,9)' }]
       })
     );
 

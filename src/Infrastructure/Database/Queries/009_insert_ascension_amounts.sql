@@ -11,16 +11,16 @@ VALUES (20, 1, 0, 3, 3, 20000, 2, 4, 1, 1),
 
 INSERT INTO character_talent_ascension_details
 (level, book_amount, common_amount, weekly_amount,
- mora, book_quality, common_quality, crown)
-VALUES (1, 3, 6, 0, 12500, 2, 1, FALSE),
-       (2, 2, 3, 0, 17500, 3, 2, FALSE),
-       (3, 4, 4, 0, 25000, 3, 2, FALSE),
-       (4, 6, 6, 0, 30000, 3, 2, FALSE),
-       (5, 9, 9, 0, 37500, 3, 2, FALSE),
-       (6, 4, 4, 1, 120000, 4, 3, FALSE),
-       (7, 6, 6, 1, 260000, 4, 3, FALSE),
-       (8, 12, 9, 2, 450000, 4, 3, FALSE),
-       (9, 16, 12, 2, 700000, 4, 3, TRUE)
+ mora, book_quality, common_quality, weekly_quality, needs_event)
+VALUES (1, 3, 6, 0, 12500, 2, 1, 5, FALSE),
+       (2, 2, 3, 0, 17500, 3, 2, 5, FALSE),
+       (3, 4, 4, 0, 25000, 3, 2, 5, FALSE),
+       (4, 6, 6, 0, 30000, 3, 2, 5, FALSE),
+       (5, 9, 9, 0, 37500, 3, 2, 5, FALSE),
+       (6, 4, 4, 1, 120000, 4, 3, 5, FALSE),
+       (7, 6, 6, 1, 260000, 4, 3, 5, FALSE),
+       (8, 12, 9, 2, 450000, 4, 3, 5, FALSE),
+       (9, 16, 12, 2, 700000, 4, 3, 5, TRUE)
 ;
 
 insert into weapon_ascension_details

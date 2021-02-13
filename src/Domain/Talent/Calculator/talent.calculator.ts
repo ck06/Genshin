@@ -57,7 +57,7 @@ export class TalentCalculator {
       TOTALS.addResource(
         new WeeklyEnemyDrop(ascension.weekly.name, ascension.details.weeklyAmount, 4),
       );
-      TOTALS.addResource(new Crown(ascension.crown.name, Number(ascension.details.crown), 5));
+      TOTALS.addResource(new Crown(ascension.crown.name, Number(ascension.details.needsEvent), 5));
       TOTALS.addResource(new Mora(ascension.details.mora));
     }
 

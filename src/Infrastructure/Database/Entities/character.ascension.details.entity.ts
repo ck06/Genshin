@@ -36,4 +36,28 @@ export class CharacterAscensionDetails {
 
   @Column()
   mora: number;
+
+  public constructor(
+    level: number,
+    gemAmount: number,
+    gemQuality: Quality,
+    bossAmount: number,
+    bossQuality: Quality,
+    gatherAmount: number,
+    gatherQuality: Quality,
+    commonAmount: number,
+    commonQuality: Quality,
+    mora: number
+  ) {
+    this.level = level;
+    this.gemAmount = gemAmount;
+    this.gemQuality = gemQuality;
+    this.bossAmount = bossAmount;
+    this.bossQuality = bossQuality;
+    this.gatherAmount = gatherAmount;
+    this.gatherQuality = gatherQuality;
+    this.commonAmount = commonAmount;
+    this.commonQuality = commonQuality;
+    this.mora = mora;
+  }
 }
