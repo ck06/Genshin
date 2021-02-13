@@ -1,5 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import * as fs from "fs";
+
+const DATABASE_PATH = 'src/Infrastructure/Database/Genshin.db'
+
+// delete database before establishing a connection to purge it.
+fs.unlinkSync(DATABASE_PATH);
 
 @Module({
   imports: [
