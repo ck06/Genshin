@@ -31,4 +31,22 @@ export class CharacterAscension {
   @ManyToOne(() => Item, { eager: true })
   @JoinColumn({ name: 'common' })
   common: Item;
+
+  constructor(
+    id: number,
+    character: Character,
+    details: CharacterAscensionDetails,
+    gem: Item,
+    boss: Item,
+    gather: Item,
+    common: Item
+  ) {
+    this.id = id;
+    this.character = character;
+    this.details = details;
+    this.gem = gem;
+    this.boss = boss;
+    this.gather = gather;
+    this.common = common;
+  }
 }

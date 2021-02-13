@@ -103,7 +103,6 @@ export class insertAscensionDetails1613218957057 implements MigrationInterface {
       );
     }
 
-    console.log('inserting weapon details');
     for (let details of this.WEAPON_ASCENSION_DETAILS) {
       await queryRunner.manager.save(
         new WeaponAscensionDetails(
@@ -122,8 +121,8 @@ export class insertAscensionDetails1613218957057 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.clearTable('character_ascension_details')
-    await queryRunner.clearTable('character_talent_ascension_details')
-    await queryRunner.clearTable('weapon_ascension_details')
+    await queryRunner.clearTable('character_ascension_details');
+    await queryRunner.clearTable('character_talent_ascension_details');
+    await queryRunner.clearTable('weapon_ascension_details');
   }
 }

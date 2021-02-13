@@ -53,15 +53,15 @@ VALUES ('Albedo', 'Geo', 'Basalt Pillar', 'Cecilia', '%Scroll'),
 
 -- use the temp tables to insert IDs semi-dynamically for each level with the correct qualities.
 INSERT INTO character_ascension (level, character, gem, boss, gather, common)
-SELECT levels.level, characters.id, gems.id, bosses.id, gathers.id, commons.id
+SELECT levels.level, character.id, gems.id, bosses.id, gathers.id, commons.id
   FROM temp_character_ascension_levels levels,
        character_ascension_details details,
        temp_character_resource_names names
-         LEFT JOIN characters ON names.character = characters.name
-         LEFT JOIN items AS gems ON (names.gem = gems.details AND gems.quality = details.gem_quality)
-         LEFT JOIN items AS bosses ON (names.boss = bosses.name AND bosses.quality = details.boss_quality)
-         LEFT JOIN items AS gathers ON (names.gather = gathers.name AND gathers.quality = details.gather_quality)
-         LEFT JOIN items AS commons ON (commons.name LIKE names.common AND commons.quality = details.common_quality)
+         LEFT JOIN character ON names.character = character.name
+         LEFT JOIN item AS gems ON (names.gem = gems.details AND gems.quality = details.gem_quality)
+         LEFT JOIN item AS bosses ON (names.boss = bosses.name AND bosses.quality = details.boss_quality)
+         LEFT JOIN item AS gathers ON (names.gather = gathers.name AND gathers.quality = details.gather_quality)
+         LEFT JOIN item AS commons ON (commons.name LIKE names.common AND commons.quality = details.common_quality)
  WHERE levels.level = details.level
 ;
 
