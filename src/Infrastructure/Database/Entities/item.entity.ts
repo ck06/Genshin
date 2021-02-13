@@ -2,22 +2,29 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 't
 import { ItemType } from './item_type.entity';
 import { Quality } from './quality.entity';
 
-@Entity({ name: 'items' })
+@Entity({ name: 'item' })
 export class Item {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: '255' })
   name: string;
 
-  @ManyToOne(() => Quality, (quality) => quality.items, {eager: true})
+  @ManyToOne(() => Quality, (quality) => quality.items, { eager: true })
   @JoinColumn({ name: 'quality' })
   quality: Quality;
 
-  @ManyToOne(() => ItemType, (type) => type.items, {eager: true})
+  @ManyToOne(() => ItemType, (type) => type.items, { eager: true })
   @JoinColumn({ name: 'type' })
   type: ItemType;
 
-  @Column()
+  @Column({ type: 'varchar', length: '255' })
   details: string;
+
+  public constructor(name: string, quality: Quality, type: ItemType, details?: string) {
+    this.name = name;
+    this.quality = quality;
+    this.type = type;
+    this.details = details ?? '';
+  }
 }

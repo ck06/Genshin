@@ -1,19 +1,19 @@
 -- Weapon EXP Material (details: amount of EXP given)
-INSERT INTO items (name, quality, type, details)
+INSERT INTO item (name, quality, type, details)
 VALUES ('Enhancement Ore', 1, 1, '400'),
        ('Fine Enhancement Ore', 2, 1, '2000'),
        ('Mystic Enhancement Ore', 3, 1, '10000')
 ;
 
 -- Character EXP Material (details: amount of EXP given)
-INSERT INTO items (name, quality, type, details)
+INSERT INTO item (name, quality, type, details)
 VALUES ('Wanderer''s Advice', 2, 2, '1000'),
        ('Adventurer''s Experience', 3, 2, '5000'),
        ('Hero''s Wit', 4, 2, '20000')
 ;
 
 -- Talent Level-Up Materials (details: on which days their domain is up)
-INSERT INTO items (name, quality, type, details)
+INSERT INTO item (name, quality, type, details)
 VALUES -- Mondstadt
        ('Teachings of Ballad', 2, 3, '[Wednesday, Saturday, Sunday]'),
        ('Guide to Ballad', 3, 3, '[Wednesday, Saturday, Sunday]'),
@@ -38,7 +38,7 @@ VALUES -- Mondstadt
 ;
 
 -- Local Materials
-INSERT INTO items (name, quality, type)
+INSERT INTO item (name, quality, type)
 VALUES ('Calla Lily', 1, 4),
        ('Cecilia', 1, 4),
        ('Cor Lapis', 1, 4),
@@ -58,7 +58,7 @@ VALUES ('Calla Lily', 1, 4),
 ;
 
 -- Weapon Primary Materials (details: on which days their domain is up)
-INSERT INTO items (name, quality, type, details)
+INSERT INTO item (name, quality, type, details)
 VALUES -- Mondstadt
        ('Tile of Decarabian''s Tower', 2, 5, '[Monday, Thursday, Sunday]'),
        ('Debris of Decarabian''s City', 3, 5, '[Monday, Thursday, Sunday]'),
@@ -89,7 +89,7 @@ VALUES -- Mondstadt
 ;
 
 -- Jewels (details: what element they are)
-INSERT INTO items (name, quality, type, details)
+INSERT INTO item (name, quality, type, details)
 VALUES ('Brilliant Diamond Sliver', 2, 6, 'Traveler-specific'),
        ('Brilliant Diamond Fragment', 3, 6, 'Traveler-specific'),
        ('Brilliant Diamond Chunk', 4, 6, 'Traveler-specific'),
@@ -125,7 +125,7 @@ VALUES ('Brilliant Diamond Sliver', 2, 6, 'Traveler-specific'),
 ;
 
 -- Common Materials
-INSERT INTO items (name, quality, type)
+INSERT INTO item (name, quality, type)
 VALUES ('Slime Condensate', 1, 7),
        ('Slime Secretions', 2, 7),
        ('Slime Concentrate', 3, 7),
@@ -153,7 +153,7 @@ VALUES ('Slime Condensate', 1, 7),
 ;
 
 -- Weapon Secondary Materials
-INSERT INTO items (name, quality, type)
+INSERT INTO item (name, quality, type)
 VALUES ('Heavy Horn', 2, 7),
        ('Black Bronze Horn', 3, 7),
        ('Black Crystal Horn', 4, 7),
@@ -175,7 +175,7 @@ VALUES ('Heavy Horn', 2, 7),
 ;
 
 -- Elemental Stones (details: what boss they drop from)
-INSERT INTO items (name, quality, type, details)
+INSERT INTO item (name, quality, type, details)
 VALUES ('Everflame Seed', 4, 9, 'Pyro Regisvine'),
        ('Cleansing Heart', 4, 9, 'Oceanid'),
        ('Lightning Prism', 4, 9, 'Electro Hypostasis'),
@@ -186,7 +186,7 @@ VALUES ('Everflame Seed', 4, 9, 'Pyro Regisvine'),
 ;
 
 -- Weekly Talent Level-Up Materials (details: which boss they drop from, if needed)
-INSERT INTO items (name, quality, type, details)
+INSERT INTO item (name, quality, type, details)
 VALUES ('Dvalin''s Plume', 5, 10, 'Stormterror'),
        ('Dvalin''s Claw', 5, 10, 'Stormterror'),
        ('Dvalin''s Sigh', 5, 10, 'Stormterror'),
@@ -199,6 +199,6 @@ VALUES ('Dvalin''s Plume', 5, 10, 'Stormterror'),
 ;
 
 -- Special Talent Level-Up Materials (details: how to obtain)
-INSERT INTO items (name, quality, type, details)
+INSERT INTO item (name, quality, type, details)
 VALUES ('Crown of Insight', 5, 11, 'Only obtainable through event reward')
 ;
