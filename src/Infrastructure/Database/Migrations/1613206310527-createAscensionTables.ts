@@ -160,11 +160,11 @@ export class createAscensionTables1613206310527 implements MigrationInterface {
         name: 'weapon_ascension',
         columns: [
           { name: 'id', type: 'integer', isPrimary: true, isGenerated: true },
-          { name: 'weapon', type: 'integer', isNullable: false },
+          { name: 'weapon', type: 'integer' },
           { name: 'level', type: 'integer' },
-          { name: 'domain', type: 'integer', isNullable: false },
-          { name: 'elite', type: 'integer', isNullable: true },
-          { name: 'common', type: 'integer', isNullable: false }
+          { name: 'domain', type: 'integer' },
+          { name: 'elite', type: 'integer' },
+          { name: 'common', type: 'integer' }
         ],
         foreignKeys: [
           { columnNames: ['weapon'], referencedTableName: 'weapon', referencedColumnNames: ['id'] },

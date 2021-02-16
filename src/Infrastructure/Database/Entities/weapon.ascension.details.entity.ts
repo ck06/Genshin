@@ -7,28 +7,28 @@ export class WeaponAscensionDetails {
   @PrimaryColumn({ name: 'level', type: 'integer', unique: false })
   level: number;
 
-  @ManyToOne(() => Quality)
+  @ManyToOne(() => Quality, {eager: true})
   @JoinColumn({ name: 'weapon_quality' })
   weaponQuality: Quality;
 
   @Column({ name: 'domain_amount' })
   domainAmount: number;
 
-  @ManyToOne(() => Quality)
+  @ManyToOne(() => Quality, {eager: true})
   @JoinColumn({ name: 'domain_quality' })
   domainQuality: Quality;
 
   @Column({ name: 'elite_amount' })
   eliteAmount: number;
 
-  @ManyToOne(() => Quality)
+  @ManyToOne(() => Quality, {eager: true})
   @JoinColumn({ name: 'elite_quality' })
   eliteQuality: Quality;
 
   @Column({ name: 'common_amount' })
   commonAmount: number;
 
-  @ManyToOne(() => Quality)
+  @ManyToOne(() => Quality, {eager: true})
   @JoinColumn({ name: 'common_quality' })
   commonQuality: Quality;
 

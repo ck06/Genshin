@@ -144,24 +144,24 @@ export class insertItems1613164613653 implements MigrationInterface {
     ['Deathly Statuette', 4, 7],
 
     // daily
-    ['Heavy Horn', 2, 7],
-    ['Black Bronze Horn', 3, 7],
-    ['Black Crystal Horn', 4, 7],
-    ['Dead Ley Line Branch', 2, 7],
-    ['Dead Ley Line Leaves', 3, 7],
-    ['Ley Line Sprout', 4, 7],
-    ['Chaos Device', 2, 7],
-    ['Chaos Circuit', 3, 7],
-    ['Chaos Core', 4, 7],
-    ['Mist Grass Pollen', 2, 7],
-    ['Mist Grass', 3, 7],
-    ['Mist Grass Wick', 4, 7],
-    ["Hunter's Sacrificial Knife", 2, 7],
-    ["Agent's Sacrificial Knife", 3, 7],
-    ["Inspector's Sacrificial Knife", 4, 7],
-    ['Fragile Bone Shard', 2, 7],
-    ['Sturdy Bone Shard', 3, 7],
-    ['Fossilized Bone Shard', 4, 7],
+    ['Heavy Horn', 2, 8],
+    ['Black Bronze Horn', 3, 8],
+    ['Black Crystal Horn', 4, 8],
+    ['Dead Ley Line Branch', 2, 8],
+    ['Dead Ley Line Leaves', 3, 8],
+    ['Ley Line Sprout', 4, 8],
+    ['Chaos Device', 2, 8],
+    ['Chaos Circuit', 3, 8],
+    ['Chaos Core', 4, 8],
+    ['Mist Grass Pollen', 2, 8],
+    ['Mist Grass', 3, 8],
+    ['Mist Grass Wick', 4, 8],
+    ["Hunter's Sacrificial Knife", 2, 8],
+    ["Agent's Sacrificial Knife", 3, 8],
+    ["Inspector's Sacrificial Knife", 4, 8],
+    ['Fragile Bone Shard', 2, 8],
+    ['Sturdy Bone Shard', 3, 8],
+    ['Fossilized Bone Shard', 4, 8],
 
     // resin
     ['Everflame Seed', 4, 9, 'Pyro Regisvine'],
@@ -184,7 +184,7 @@ export class insertItems1613164613653 implements MigrationInterface {
     ['Shadow of the Warrior', 5, 10, 'Childe'],
 
     // crown
-    ['Crown of Insight', 5, 11, 'Only obtainable through event reward'],
+    ['Crown of Insight', 5, 11, 'Only obtainable through event reward']
   ];
 
   public async up(queryRunner: QueryRunner): Promise<void> {
