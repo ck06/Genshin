@@ -79,7 +79,7 @@ export class insertTalentAscensionMaterials1613447329944 implements MigrationInt
           name: details.weeklyName
         });
 
-        await queryRunner.manager.save(new TalentAscension(character, ascension, event, event, event, event));
+        await queryRunner.manager.save(new TalentAscension(character, ascension, book, common, weekly, event));
       }
     }
   }
