@@ -5,7 +5,7 @@ import { Item } from './item.entity';
 
 @Entity('character_talent_ascension')
 export class TalentAscension {
-  @PrimaryColumn()
+  @PrimaryColumn({name: 'id', generated: true})
   id: number;
 
   @ManyToOne(() => Character, { eager: true })
@@ -29,6 +29,22 @@ export class TalentAscension {
   weekly: Item;
 
   @ManyToOne(() => Item, { eager: true })
-  @JoinColumn({ name: 'crown' })
-  crown: Item;
+  @JoinColumn({ name: 'event' })
+  event: Item;
+
+  constructor(
+    character: Character,
+    details: TalentAscensionDetails,
+    book: Item,
+    common: Item,
+    weekly: Item,
+    event: Item
+  ) {
+    this.character = character;
+    this.details = details;
+    this.book = book;
+    this.common = common;
+    this.weekly = weekly;
+    this.event = event;
+  }
 }

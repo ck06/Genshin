@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Quality } from './quality.entity';
+import { Item } from './item.entity';
 
 @Entity({ name: 'weapon' })
 export class Weapon {
@@ -12,7 +13,7 @@ export class Weapon {
   @Column({ type: 'varchar', length: '255' })
   type: string;
 
-  @ManyToOne(() => Quality, (quality) => quality.weapons)
+  @ManyToOne(() => Quality, quality => quality.weapons, { eager: true })
   @JoinColumn({ name: 'quality' })
   quality: Quality;
 

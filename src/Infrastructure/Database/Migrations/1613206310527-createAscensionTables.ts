@@ -106,7 +106,7 @@ export class createAscensionTables1613206310527 implements MigrationInterface {
           { columnNames: ['character'], referencedTableName: 'character', referencedColumnNames: ['id'] },
           {
             columnNames: ['level'],
-            referencedTableName: 'character_ascension_details',
+            referencedTableName: 'character_talent_ascension_details',
             referencedColumnNames: ['level']
           },
           { columnNames: ['book'], referencedTableName: 'item', referencedColumnNames: ['id'] },

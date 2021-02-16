@@ -5,23 +5,23 @@ import { Character } from './character.entity';
 
 @Entity()
 export class Quality {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    color: string;
+  @Column()
+  color: string;
 
-    @OneToMany(() => Character, (character) => character.quality)
-    characters: Character[];
+  @OneToMany(() => Character, character => character.quality, { lazy: true })
+  characters: Character[];
 
-    @OneToMany(() => Item, (item) => item.quality)
-    items: Item[];
+  @OneToMany(() => Item, item => item.quality, { lazy: true })
+  items: Item[];
 
-    @OneToMany(() => Weapon, (weapon) => weapon.quality)
-    weapons: Weapon[];
+  @OneToMany(() => Weapon, weapon => weapon.quality, { lazy: true })
+  weapons: Weapon[];
 
-    public constructor(id: number, color: string) {
-        this.id = id;
-        this.color = color;
-    }
+  public constructor(id: number, color: string) {
+    this.id = id;
+    this.color = color;
+  }
 }

@@ -9,7 +9,7 @@ export class Character {
   @Column({ type: 'varchar', length: 255 })
   name: string;
 
-  @ManyToOne(() => Quality, (quality) => quality.characters)
+  @ManyToOne(() => Quality, quality => quality.characters, { eager: true })
   @JoinColumn({ name: 'quality' })
   quality: Quality;
 

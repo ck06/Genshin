@@ -26,8 +26,8 @@ export class insertCharacters1613164603482 implements MigrationInterface {
     ['Razor', 4],
     ['Sucrose', 4],
     ['Tartaglia', 5],
-    ['Traveler [Anemo]', 5], // note: travelers are split up because
-    ['Traveler [Geo]', 5], //         their talents differ per element
+    ['Traveler (Anemo)', 5], // note: travelers are split up because
+    ['Traveler (Geo)', 5], //         their talents differ per element
     ['Venti', 5],
     ['Xiangling', 4],
     ['Xiao', 5],

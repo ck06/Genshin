@@ -18,6 +18,7 @@ fs.unlinkSync(DATABASE_PATH);
       migrationsTableName: '_migrations',
       migrationsTransactionMode: 'each',
       migrationsRun: true,
+      retryAttempts: 0,
       synchronize: false,
       cli: {
         entitiesDir: './Infrastructure/Database/Entities',
