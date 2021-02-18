@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { WeaponController } from '../Application/Weapon/Controllers/weapon.controller';
 import { WeaponCalculator } from '../Domain/Weapon/Calculator/weapon.calculator';
 import { RequiredResourcesConverter } from '../Domain/Resource/Converters/required.resources.converter';
-import { QualityConverter } from '../Infrastructure/Converters/quality.converter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Weapon } from '../Infrastructure/Database/Entities/weapon.entity';
 import { Item } from '../Infrastructure/Database/Entities/item.entity';
@@ -20,6 +19,6 @@ import { WeaponAscension } from '../Infrastructure/Database/Entities/weapon.asce
     )
   ],
   controllers: [WeaponController],
-  providers: [WeaponCalculator, RequiredResourcesConverter, QualityConverter]
+  providers: [WeaponCalculator, RequiredResourcesConverter]
 })
 export class WeaponModule {}

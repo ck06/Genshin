@@ -7,7 +7,6 @@ import ExperienceOre from '../../../Infrastructure/Models/Materials/World/experi
 import RequiredResources from '../Models/required.resources';
 import TalentBook from '../../../Infrastructure/Models/Materials/Domain/talent.book';
 import { Injectable } from '@nestjs/common';
-import { QualityConverter } from '../../../Infrastructure/Converters/quality.converter';
 import { zprintf } from '../../Shared/zprintf.service';
 import { InjectEntityManager } from "@nestjs/typeorm";
 import { EntityManager } from "typeorm";

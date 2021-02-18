@@ -4,8 +4,10 @@ import * as fs from "fs";
 
 const DATABASE_PATH = 'src/Infrastructure/Database/Genshin.db'
 
-// delete database before establishing a connection to purge it.
-fs.unlinkSync(DATABASE_PATH);
+// remove the database if it exists, since we always want to rebuild it from migrations.
+if (fs.existsSync(DATABASE_PATH)) {
+  fs.unlinkSync(DATABASE_PATH);
+}
 
 @Module({
   imports: [
