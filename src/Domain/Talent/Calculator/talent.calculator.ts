@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import CommonEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/common';
-import Crown from '../../../Infrastructure/Models/Materials/World/crown';
+import EventItem from '../../../Infrastructure/Models/Materials/World/event';
 import Mora from '../../../Infrastructure/Models/Materials/World/mora';
 import RequiredResources from '../../Resource/Models/required.resources';
 import TalentBook from '../../../Infrastructure/Models/Materials/Domain/talent.book';
@@ -49,7 +49,7 @@ export class TalentCalculator {
         new CommonEnemyDrop(ascension.common.name, ascension.details.commonAmount, ascension.details.commonQuality.id)
       );
       TOTALS.addResource(new WeeklyEnemyDrop(ascension.weekly.name, ascension.details.weeklyAmount, 4));
-      TOTALS.addResource(new Crown(ascension.event.name, Number(ascension.details.needsEvent), 5));
+      TOTALS.addResource(new EventItem(ascension.event.name, Number(ascension.details.needsEvent), 5));
       TOTALS.addResource(new Mora(ascension.details.mora));
     }
 

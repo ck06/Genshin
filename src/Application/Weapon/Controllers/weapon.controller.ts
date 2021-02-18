@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Header, Param } from '@nestjs/common';
 import { WeaponCalculator } from '../../../Domain/Weapon/Calculator/weapon.calculator';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
 
@@ -13,13 +13,20 @@ export class WeaponController {
   ) {}
 
   @Get('/weapon/:name/from/:start/to/:end')
-  getXToY(@Param('name') name: string, @Param('start') start: number, @Param('end') end: number): string {
-    // return JSON.stringify(this.resourceConverter.toSortedObject(this.weaponCalculator.calculate(name, start, end)));
-    return '';
+  @Header('content-type', 'application/json')
+  async getXToY(
+    @Param('name') name: string,
+    @Param('start') start: number,
+    @Param('end') end: number
+  ): Promise<string> {
+    return JSON.stringify(
+      await this.resourceConverter.toSortedObject(await this.weaponCalculator.calculate(name, start, end))
+    );
   }
 
   @Get('/weapon/:name')
-  getMinToMax(@Param('name') name: string): string {
+  @Header('content-type', 'application/json')
+  async getMinToMax(@Param('name') name: string): Promise<string> {
     return this.getXToY(name, this.MIN, this.MAX);
   }
 }

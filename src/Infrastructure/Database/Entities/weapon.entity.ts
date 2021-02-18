@@ -1,6 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Quality } from './quality.entity';
 import { Item } from './item.entity';
+import { WeaponAscension } from "./weapon.ascension.entity";
+import { CharacterAscension } from "./character.ascension.entity";
 
 @Entity({ name: 'weapon' })
 export class Weapon {
@@ -20,6 +22,9 @@ export class Weapon {
   @Column({ type: 'varchar', length: '255' })
   source: string;
 
+  @OneToMany(() => WeaponAscension, ascension => ascension.weapon, { lazy: true })
+  weaponAscensions: Promise<WeaponAscension[]>;
+  
   public constructor(name: string, type: string, quality: Quality, source = '') {
     this.name = name;
     this.type = type;

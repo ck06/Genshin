@@ -7,7 +7,7 @@ import CommonEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/comm
 import DailyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/daily';
 import ResinEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/boss';
 import WeeklyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/weekly';
-import Crown from '../../../Infrastructure/Models/Materials/World/crown';
+import EventItem from '../../../Infrastructure/Models/Materials/World/event';
 import AbstractResource from '../../../Infrastructure/Models/Abstracts/abstract.resource';
 import TalentBook from '../../../Infrastructure/Models/Materials/Domain/talent.book';
 import DomainDrop from '../../../Infrastructure/Models/Materials/Domain/domain';
@@ -39,7 +39,7 @@ export default class RequiredResources {
       this.addResinItems(name, amount, quality);
     } else if (resource instanceof WeeklyEnemyDrop) {
       this.addWeeklyItems(name, amount, quality);
-    } else if (resource instanceof Crown) {
+    } else if (resource instanceof EventItem) {
       this.addCrown(name, amount, quality);
     } else if (resource instanceof ExperienceBook) {
       this.addExperienceBooks(name, amount, quality);
@@ -122,6 +122,6 @@ export default class RequiredResources {
 
   // technically an Event item, but I'm leaving it as Crown until another item pops up.
   private addCrown(name: string, amount: number, quality: number) {
-    this.crown = new Crown(name, amount, quality);
+    this.crown = new EventItem(name, amount, quality);
   }
 }

@@ -1,4 +1,4 @@
-// these are the once-a-week 60 resin costing enemies.
+// these are the 40 resin costing enemies.
 import AbstractResource from '../../Abstracts/abstract.resource';
 
 export default class ResinEnemyDrop extends AbstractResource {

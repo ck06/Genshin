@@ -123,11 +123,13 @@ export class createAscensionTables1613206310527 implements MigrationInterface {
       new Table({
         name: 'weapon_experience',
         columns: [
-          { name: 'level', type: 'integer', isPrimary: true },
-          { name: 'quality', type: 'integer', isPrimary: true },
+          { name: 'id', type: 'integer', isPrimary: true, isGenerated: true },
+          { name: 'level', type: 'integer' },
+          { name: 'quality', type: 'integer' },
           { name: 'exp_to_next', type: 'integer' }
         ],
-        foreignKeys: [{ columnNames: ['quality'], referencedTableName: 'quality', referencedColumnNames: ['id'] }]
+        foreignKeys: [{ columnNames: ['quality'], referencedTableName: 'quality', referencedColumnNames: ['id'] }],
+        uniques: [{ columnNames: ['level', 'quality'] }]
       })
     );
 

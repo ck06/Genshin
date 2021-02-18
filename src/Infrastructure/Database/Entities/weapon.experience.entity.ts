@@ -1,9 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Quality } from './quality.entity';
 
 @Entity('weapon_experience')
 export class WeaponExperience {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ name: 'level' })
   level: number;
 
   @ManyToOne(() => Quality)

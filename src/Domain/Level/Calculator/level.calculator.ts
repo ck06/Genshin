@@ -9,7 +9,6 @@ import GatheredItem from '../../../Infrastructure/Models/Materials/World/gather'
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { CharacterAscension } from '../../../Infrastructure/Database/Entities/character.ascension.entity';
 import { EntityManager } from 'typeorm';
-import constants from '../../../Infrastructure/Database/constants';
 import { Item } from '../../../Infrastructure/Database/Entities/item.entity';
 import { CharacterExperience } from '../../../Infrastructure/Database/Entities/character.experience.entity';
 import { Character } from '../../../Infrastructure/Database/Entities/character.entity';
@@ -18,6 +17,9 @@ import { ItemType } from '../../../Infrastructure/Database/Entities/item_type.en
 @Injectable()
 export class LevelCalculator {
   constructor(@InjectEntityManager('SQLite') private em: EntityManager) {}
+
+  // 1 mora for every 5 exp
+  public MORA_PER_CHARACTER_EXP = 0.2;
 
   private async checkConstraints(start: number, end: number) {
     // fetch level range through required EXP table
@@ -46,7 +48,7 @@ export class LevelCalculator {
 
     let cumulativeExp = 0;
     for (let currentLevel = start; currentLevel <= end; currentLevel++) {
-      TOTALS.addResource(new Mora(EXP_PER_LEVEL[currentLevel - 1] * constants.MORA_PER_CHARACTER_EXP));
+      TOTALS.addResource(new Mora(EXP_PER_LEVEL[currentLevel - 1] * this.MORA_PER_CHARACTER_EXP));
       cumulativeExp += EXP_PER_LEVEL[currentLevel - 1];
 
       // experience is separate since it has to go past max ascension.
