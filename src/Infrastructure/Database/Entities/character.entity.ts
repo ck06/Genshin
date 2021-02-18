@@ -13,7 +13,7 @@ export class Character {
 
   @ManyToOne(() => Quality, quality => quality.characters, { eager: true })
   @JoinColumn({ name: 'quality' })
-  quality: Quality | number;
+  quality: Quality;
 
   @OneToMany(() => CharacterAscension, ascension => ascension.character, { lazy: true })
   characterAscensions: Promise<CharacterAscension[]>;
@@ -21,7 +21,7 @@ export class Character {
   @OneToMany(() => TalentAscension, ascension => ascension.character, { lazy: true })
   talentAscensions: Promise<TalentAscension[]>;
 
-  public constructor(name: string, quality: Quality | number, id?: number) {
+  public constructor(name: string, quality: Quality, id?: number) {
     if (id) this.id = id;
     this.name = name;
     this.quality = quality;

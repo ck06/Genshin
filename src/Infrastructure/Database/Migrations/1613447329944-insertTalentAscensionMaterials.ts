@@ -54,7 +54,7 @@ export class insertTalentAscensionMaterials1613447329944 implements MigrationInt
     const BOOK_TYPE = await queryRunner.manager.findOne(ItemType, { inCode: 'talentBook' });
     const COMMON_TYPE = await queryRunner.manager.findOne(ItemType, { inCode: 'common' });
     const WEEKLY_TYPE = await queryRunner.manager.findOne(ItemType, { inCode: 'weekly' });
-    const EVENT_TYPE = await queryRunner.manager.findOne(ItemType, { inCode: 'crown' });
+    const EVENT_TYPE = await queryRunner.manager.findOne(ItemType, { inCode: 'event' });
 
     // as of writing there is only 1 event item so no extra conditions are needed
     let event = await queryRunner.manager.findOneOrFail(Item, { type: EVENT_TYPE });

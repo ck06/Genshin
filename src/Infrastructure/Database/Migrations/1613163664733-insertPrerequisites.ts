@@ -11,7 +11,7 @@ export class insertPrerequisites1613163664733 implements MigrationInterface {
     new Quality(2, 'Green'),
     new Quality(3, 'Blue'),
     new Quality(4, 'Purple'),
-    new Quality(5, 'Gold'),
+    new Quality(5, 'Gold')
   ];
 
   private readonly ITEM_TYPES = [
@@ -27,7 +27,7 @@ export class insertPrerequisites1613163664733 implements MigrationInterface {
 
     // These are handled separately in the code, so they require their own types.
     new ItemType(10, 'weekly', 'Talent Level-Up Materials'),
-    new ItemType(11, 'crown', 'Talent Level-Up Materials'),
+    new ItemType(11, 'event', 'Talent Level-Up Materials')
   ];
 
   public async up(queryRunner: QueryRunner): Promise<void> {

@@ -12,7 +12,7 @@ export class ItemType {
   @Column({ name: 'in_data' })
   inData: string;
 
-  @OneToMany(() => Item, (item) => item.type)
+  @OneToMany(() => Item, item => item.type)
   items: Promise<Item[]>;
 
   public constructor(id: number, inCode: string, inData: string) {

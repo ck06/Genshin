@@ -10,11 +10,11 @@ export class Item {
   @Column({ type: 'varchar', length: '255' })
   name: string;
 
-  @ManyToOne(() => Quality, (quality) => quality.items, { eager: true })
+  @ManyToOne(() => Quality, quality => quality.items, { eager: true })
   @JoinColumn({ name: 'quality' })
   quality: Quality;
 
-  @ManyToOne(() => ItemType, (type) => type.items, { eager: true })
+  @ManyToOne(() => ItemType, type => type.items, { eager: true })
   @JoinColumn({ name: 'type' })
   type: ItemType;
 
