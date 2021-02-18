@@ -1,8 +1,9 @@
-import { Controller, Get, Header, Param } from '@nestjs/common';
+import { Controller, Get, Header, Injectable, Param } from '@nestjs/common';
 import { TalentCalculator } from '../../../Domain/Talent/Calculator/talent.calculator';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
 
 @Controller()
+@Injectable()
 export class TalentController {
   private readonly MIN = 1;
   private readonly MAX = 10;

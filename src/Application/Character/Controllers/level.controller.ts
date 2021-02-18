@@ -1,8 +1,9 @@
-import { Controller, Get, Header, Param } from '@nestjs/common';
+import { Controller, Get, Header, Injectable, Param } from '@nestjs/common';
 import { LevelCalculator } from '../../../Domain/Level/Calculator/level.calculator';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
 
 @Controller()
+@Injectable()
 export class LevelController {
   private readonly MIN = 1;
   private readonly MAX = 90;

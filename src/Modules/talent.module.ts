@@ -18,7 +18,7 @@ import { RequiredResourcesConverter } from "../Domain/Resource/Converters/requir
     ),
   ],
   controllers: [TalentController],
-  providers: [TalentCalculator, RequiredResourcesConverter],
-  exports: [TalentCalculator],
+  providers: [TalentController, TalentCalculator, RequiredResourcesConverter],
+  exports: [TalentController, TalentCalculator, RequiredResourcesConverter],
 })
 export class TalentModule {}

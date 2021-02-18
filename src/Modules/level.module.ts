@@ -27,7 +27,7 @@ import { Quality } from "../Infrastructure/Database/Entities/quality.entity";
     ),
   ],
   controllers: [LevelController],
-  providers: [LevelCalculator, RequiredResourcesConverter],
-  exports: [LevelCalculator],
+  providers: [LevelController, LevelCalculator, RequiredResourcesConverter],
+  exports: [LevelController, LevelCalculator, RequiredResourcesConverter],
 })
 export class LevelModule {}
