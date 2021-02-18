@@ -9,9 +9,14 @@ import TalentBook from '../../../Infrastructure/Models/Materials/Domain/talent.b
 import { Injectable } from '@nestjs/common';
 import { QualityConverter } from '../../../Infrastructure/Converters/quality.converter';
 import { zprintf } from '../../Shared/zprintf.service';
+import { InjectEntityManager } from "@nestjs/typeorm";
+import { EntityManager } from "typeorm";
+import { Quality } from "../../../Infrastructure/Database/Entities/quality.entity";
 
 @Injectable()
 export class RequiredResourcesConverter {
+    constructor(@InjectEntityManager('SQLite') private em: EntityManager) {}
+    
     /*
      * the order of items is roughly based off of the resource
      * order from the in-game character/talent level up windows
@@ -36,12 +41,13 @@ export class RequiredResourcesConverter {
      * crown
      * mora
      */
-    public toSortedObject(resources: RequiredResources): Record<string, number> {
-        let sortedObject: Record<string, number> = {};
+    public async toSortedObject(resources: RequiredResources): Promise<Record<string, number>> {
+        const sortedObject: Record<string, number> = {};
+        const qualities = await this.em.find(Quality);
 
         resources.experienceOre.forEach((crystal: ExperienceOre) => {
             if(crystal && crystal.amount> 0) {
-                const quality = QualityConverter.getStringForQuality(crystal.quality);
+                const quality = qualities[crystal.quality-1].color;
                 const name =
                     crystal.name !== '' ? crystal.name : zprintf('%s (%s, %s)', 'EXP Shard', 'weapon', quality);
 
@@ -51,7 +57,7 @@ export class RequiredResourcesConverter {
 
         resources.experienceBook.forEach((book: ExperienceBook) => {
             if(book && book.amount> 0) {
-                const quality = QualityConverter.getStringForQuality(book.quality);
+                const quality = qualities[book.quality-1].color;
                 const name =
                     book.name !== ''
                         ? book.name + zprintf(' (%s)', quality)
@@ -63,7 +69,7 @@ export class RequiredResourcesConverter {
 
         resources.talentBook.forEach((book: TalentBook) => {
             if(book && book.amount> 0) {
-                const quality = QualityConverter.getStringForQuality(book.quality);
+                const quality = qualities[book.quality-1].color;
                 const name =
                     book.name !== ''
                         ? book.name + zprintf(' (%s)', quality)
@@ -80,7 +86,7 @@ export class RequiredResourcesConverter {
 
         resources.gems.forEach((gem: ElementalGem) => {
             if(gem && gem.amount> 0) {
-                const quality = QualityConverter.getStringForQuality(gem.quality);
+                const quality = qualities[gem.quality-1].color;
                 const name =
                     gem.name !== '' ? gem.name + zprintf(' (%s)', quality) : zprintf('%s (%s)', 'Gems', quality);
 
@@ -90,7 +96,7 @@ export class RequiredResourcesConverter {
 
         resources.domain.forEach((domain: DomainDrop) => {
             if(domain && domain.amount> 0) {
-                const quality = QualityConverter.getStringForQuality(domain.quality);
+                const quality = qualities[domain.quality-1].color;
                 const name =
                     domain.name !== ''
                         ? domain.name + zprintf(' (%s)', quality)
@@ -102,7 +108,7 @@ export class RequiredResourcesConverter {
 
         resources.common.forEach((common: CommonEnemyDrop) => {
             if(common && common.amount> 0) {
-                const quality = QualityConverter.getStringForQuality(common.quality);
+                const quality = qualities[common.quality-1].color;
                 const name =
                     common.name !== ''
                         ? common.name + zprintf(' (%s)', quality)
@@ -114,7 +120,7 @@ export class RequiredResourcesConverter {
 
         resources.elite.forEach((elite: DailyEnemyDrop) => {
             if(elite && elite.amount> 0) {
-                const quality = QualityConverter.getStringForQuality(elite.quality);
+                const quality = qualities[elite.quality-1].color;
                 const name =
                     elite.name !== ''
                         ? elite.name + zprintf(' (%s)', quality)

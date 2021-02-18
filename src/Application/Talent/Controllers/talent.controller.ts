@@ -20,7 +20,7 @@ export class TalentController {
     @Param('end') end: number,
   ): Promise<string> {
     return JSON.stringify(
-      this.resourceConverter.toSortedObject(await this.talentCalculator.calculate(char, start, end)),
+      await this.resourceConverter.toSortedObject(await this.talentCalculator.calculate(char, start, end)),
     );
   }
 

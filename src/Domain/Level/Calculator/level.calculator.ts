@@ -9,7 +9,7 @@ import GatheredItem from '../../../Infrastructure/Models/Materials/World/gather'
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { CharacterAscension } from '../../../Infrastructure/Database/Entities/character.ascension.entity';
 import { EntityManager } from 'typeorm';
-import constants from '../../../Infrastructure/Data/Misc/constants';
+import constants from '../../../Infrastructure/Database/constants';
 import { Item } from '../../../Infrastructure/Database/Entities/item.entity';
 import { CharacterExperience } from '../../../Infrastructure/Database/Entities/character.experience.entity';
 import { Character } from '../../../Infrastructure/Database/Entities/character.entity';
@@ -39,6 +39,7 @@ export class LevelCalculator {
 
     const CHARACTER = await this.getCharacterFromName(characterName);
     const ASCENSIONS = await CHARACTER.characterAscensions;
+    const ASCENSION_LEVELS = (await CHARACTER.characterAscensions).map(asc => asc.details.level);
     const TOTALS = new RequiredResources();
     const EXP_PER_LEVEL = (await this.em.find(CharacterExperience)).map(exp => exp.expToNext);
     const BOOKS = await (await this.em.findOne(ItemType, { inCode: 'experienceBook' }, { relations: ['items'] })).items;
@@ -49,7 +50,7 @@ export class LevelCalculator {
       cumulativeExp += EXP_PER_LEVEL[currentLevel - 1];
 
       // experience is separate since it has to go past max ascension.
-      if (currentLevel == end || constants.ASCENSION_LEVELS.includes(currentLevel)) {
+      if (currentLevel == end || ASCENSION_LEVELS.includes(currentLevel)) {
         this.calculateExperience(cumulativeExp, BOOKS).forEach(book => {
           TOTALS.addResource(book);
         });
@@ -57,7 +58,7 @@ export class LevelCalculator {
         cumulativeExp = 0;
       }
 
-      if (constants.ASCENSION_LEVELS.includes(currentLevel)) {
+      if (ASCENSION_LEVELS.includes(currentLevel)) {
         let characterAscension: CharacterAscension;
         for (let ascension of ASCENSIONS) {
           if (ascension.details.level == currentLevel) {

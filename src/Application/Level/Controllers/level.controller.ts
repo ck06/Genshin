@@ -24,7 +24,7 @@ export class LevelController {
     @Param('end') end: number,
   ): Promise<string> {
     return JSON.stringify(
-      this.resourceConverter.toSortedObject(
+      await this.resourceConverter.toSortedObject(
         await this.levelCalculator.calculate(char, start, end),
       ),
     );
