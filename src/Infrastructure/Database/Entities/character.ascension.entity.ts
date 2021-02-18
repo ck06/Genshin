@@ -1,14 +1,14 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Item } from './item.entity';
 import { Character } from './character.entity';
 import { CharacterAscensionDetails } from './character.ascension.details.entity';
 
 @Entity('character_ascension')
 export class CharacterAscension {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn({ name: 'id', generated: true })
   id: number;
 
-  @ManyToOne(() => Character, { eager: true })
+  @ManyToOne(() => Character, character => character.characterAscensions, { eager: true })
   @JoinColumn({ name: 'character' })
   character: Character;
 
@@ -33,7 +33,6 @@ export class CharacterAscension {
   common: Item;
 
   constructor(
-    id: number,
     character: Character,
     details: CharacterAscensionDetails,
     gem: Item,
@@ -41,7 +40,6 @@ export class CharacterAscension {
     gather: Item,
     common: Item
   ) {
-    this.id = id;
     this.character = character;
     this.details = details;
     this.gem = gem;

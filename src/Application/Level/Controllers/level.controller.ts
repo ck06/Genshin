@@ -23,25 +23,9 @@ export class LevelController {
     @Param('start') start: number,
     @Param('end') end: number,
   ): Promise<string> {
-    if (end > this.MAX || start < this.MIN) {
-      return `Levels only range ${this.MIN.toString()}~${this.MAX.toString()}`;
-    }
-
-    let charId = 0;
-    try {
-      charId = (
-        await this.characterRepository
-          .createQueryBuilder()
-          .where('LOWER(name) = LOWER(:name)', { name: char })
-          .getOneOrFail()
-      ).id;
-    } catch {
-      return `Character with the name ${char} could not be found.`;
-    }
-
     return JSON.stringify(
       this.resourceConverter.toSortedObject(
-        await this.levelCalculator.calculate(charId, start, end),
+        await this.levelCalculator.calculate(char, start, end),
       ),
     );
   }

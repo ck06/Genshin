@@ -4,44 +4,22 @@ import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/
 
 @Controller()
 export class WeaponController {
-    private readonly MIN = 1;
-    private readonly MAX = 90;
+  private readonly MIN = 1;
+  private readonly MAX = 90;
 
-    constructor(
-        private readonly weaponCalculator: WeaponCalculator,
-        private readonly resourceConverter: RequiredResourcesConverter,
-    ) {}
+  constructor(
+    private readonly weaponCalculator: WeaponCalculator,
+    private readonly resourceConverter: RequiredResourcesConverter
+  ) {}
 
-    @Get('/weapon/from/:start/to/:end')
-    getXToY(@Param('start') start: number, @Param('end') end: number): string {
-        if (end > this.MAX || start < this.MIN) {
-            throw Error(`weapons only range ${this.MIN.toString()}~${this.MAX.toString()}`);
-        }
+  @Get('/weapon/:name/from/:start/to/:end')
+  getXToY(@Param('name') name: string, @Param('start') start: number, @Param('end') end: number): string {
+    // return JSON.stringify(this.resourceConverter.toSortedObject(this.weaponCalculator.calculate(name, start, end)));
+    return '';
+  }
 
-        return JSON.stringify(this.resourceConverter.toSortedObject(this.weaponCalculator.calculate(start, end)));
-    }
-
-    @Get('/weapon/to/:end')
-    getToY(@Param('end') end: number): string {
-        return this.getXToY(this.MIN, end);
-    }
-
-    @Get('/weapon/from/:start')
-    GetFromX(@Param('start') start: number): string {
-        return this.getXToY(start, this.MAX);
-    }
-
-    @Get('/weapon')
-    getMinToMax(): string {
-        return this.getXToY(this.MIN, this.MAX);
-    }
-
-    @Get('weapon/pretty')
-    getPretty(): string {
-        return JSON.stringify(
-            this.resourceConverter.toSortedObject(this.weaponCalculator.calculate(this.MIN, this.MAX)),
-            null,
-            '\t',
-        );
-    }
+  @Get('/weapon/:name')
+  getMinToMax(@Param('name') name: string): string {
+    return this.getXToY(name, this.MIN, this.MAX);
+  }
 }

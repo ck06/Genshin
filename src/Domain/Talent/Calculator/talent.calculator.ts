@@ -4,36 +4,38 @@ import Crown from '../../../Infrastructure/Models/Materials/World/crown';
 import Mora from '../../../Infrastructure/Models/Materials/World/mora';
 import RequiredResources from '../../Resource/Models/required.resources';
 import TalentBook from '../../../Infrastructure/Models/Materials/Domain/talent.book';
-import CharacterTalentRequirements from '../../../Infrastructure/Data/Requirements/Character/talent.requirements';
 import WeeklyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/weekly';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CharacterExperience } from '../../../Infrastructure/Database/Entities/character.experience.entity';
-import { Repository } from 'typeorm';
-import { ItemType } from '../../../Infrastructure/Database/Entities/item_type.entity';
-import { TalentAscension } from '../../../Infrastructure/Database/Entities/character.talent.ascension.entity';
-import constants from '../../../Infrastructure/Data/Misc/constants';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { EntityManager } from 'typeorm';
+import { Character } from '../../../Infrastructure/Database/Entities/character.entity';
+import { TalentAscensionDetails } from '../../../Infrastructure/Database/Entities/character.talent.ascension.details.entity';
 
 @Injectable()
 export class TalentCalculator {
-  constructor(
-    @InjectRepository(TalentAscension, 'SQLite')
-    private ascensionRepository: Repository<TalentAscension>,
-    @InjectRepository(ItemType, 'SQLite')
-    private itemTypeRepository: Repository<ItemType>,
-  ) {}
+  constructor(@InjectEntityManager('SQLite') private em: EntityManager) {}
 
-  public async calculate(
-    characterId: number,
-    start: number,
-    end: number,
-  ): Promise<RequiredResources> {
+  private async checkConstraints(start: number, end: number) {
+    // fetch level range through ascension details
+    // note: subtracting 1 from end since there is no ascension for the max level.
+    let levelRange = Array.from(await this.em.find(TalentAscensionDetails)).map(exp => exp.level);
+    if (levelRange.includes(start) && levelRange.includes(end - 1)) {
+      return;
+    }
+
+    throw new Error(`Given level range of ${start}~${end} is out of bounds`);
+  }
+
+  private async getCharacterFromName(characterName): Promise<Character> {
+    characterName = characterName.replace(/\s/gm, '').toLowerCase();
+    return await this.em.findOneOrFail(Character, { name: characterName }, { relations: ['talentAscensions'] });
+  }
+
+  public async calculate(characterName: string, start: number, end: number): Promise<RequiredResources> {
+    await this.checkConstraints(start, end);
+
+    const CHARACTER = await this.getCharacterFromName(characterName);
     const TOTALS = new RequiredResources();
-    const ASCENSIONS = [
-      ...(await this.ascensionRepository.find({
-        where: { character: characterId },
-        order: { details: 'ASC' },
-      })),
-    ];
+    const ASCENSIONS = await CHARACTER.talentAscensions;
 
     for (let ascension of ASCENSIONS) {
       if (ascension.details.level < start || ascension.details.level > end) {
@@ -41,22 +43,12 @@ export class TalentCalculator {
       }
 
       TOTALS.addResource(
-        new TalentBook(
-          ascension.book.name,
-          ascension.details.bookAmount,
-          ascension.details.bookQuality.id,
-        ),
+        new TalentBook(ascension.book.name, ascension.details.bookAmount, ascension.details.bookQuality.id)
       );
       TOTALS.addResource(
-        new CommonEnemyDrop(
-          ascension.common.name,
-          ascension.details.commonAmount,
-          ascension.details.commonQuality.id,
-        ),
+        new CommonEnemyDrop(ascension.common.name, ascension.details.commonAmount, ascension.details.commonQuality.id)
       );
-      TOTALS.addResource(
-        new WeeklyEnemyDrop(ascension.weekly.name, ascension.details.weeklyAmount, 4),
-      );
+      TOTALS.addResource(new WeeklyEnemyDrop(ascension.weekly.name, ascension.details.weeklyAmount, 4));
       TOTALS.addResource(new Crown(ascension.event.name, Number(ascension.details.needsEvent), 5));
       TOTALS.addResource(new Mora(ascension.details.mora));
     }

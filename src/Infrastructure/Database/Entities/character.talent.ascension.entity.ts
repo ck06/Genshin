@@ -5,10 +5,10 @@ import { Item } from './item.entity';
 
 @Entity('character_talent_ascension')
 export class TalentAscension {
-  @PrimaryColumn({name: 'id', generated: true})
+  @PrimaryColumn({ name: 'id', generated: true })
   id: number;
 
-  @ManyToOne(() => Character, { eager: true })
+  @ManyToOne(() => Character, character => character.talentAscensions, { eager: true })
   @JoinColumn({ name: 'character' })
   character: Character;
 

@@ -82,7 +82,7 @@ export class insertCharacterAscensionMaterials1613221679122 implements Migration
           name: Like(details.common)
         });
 
-        await queryRunner.manager.save(new CharacterAscension(level, character, ascension, gem, boss, gather, common));
+        await queryRunner.manager.save(new CharacterAscension(character, ascension, gem, boss, gather, common));
       }
     }
   }
