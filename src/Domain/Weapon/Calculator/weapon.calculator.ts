@@ -32,7 +32,7 @@ export class WeaponCalculator {
   }
 
   private async getWeaponFromName(weaponName): Promise<Weapon> {
-    weaponName = weaponName.replace(/\s/gm, '').toLowerCase();
+    weaponName = weaponName.replace(/\s|'/gm, '').toLowerCase();
     return await this.em.findOneOrFail(Weapon, { name: weaponName }, { relations: ['weaponAscensions'] });
   }
 
