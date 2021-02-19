@@ -12,6 +12,56 @@ export class CharacterController {
     private readonly resourceConverter: RequiredResourcesConverter
   ) {}
 
+  @Get('/character/tmp')
+  @Header('content-type', 'application/json')
+  async test() {
+    const characters = [
+      ['Albedo', 50, 1, 1, 1],
+      ['Amber', 50, 1, 1, 1],
+      ['Barbara', 70, 1, 2, 1],
+      ['Beidou', 50, 1, 1, 1],
+      ['Bennett', 50, 1, 1, 1],
+      ['Chongyun', 50, 1, 1, 1],
+      ['Diluc', 50, 1, 1, 1],
+      ['Diona', 80, 1, 4, 1],
+      ['Jean', 50, 1, 1, 1],
+      ['Kaeya', 50, 1, 1, 1],
+      ['Keqing', 50, 1, 1, 1],
+      ['Lisa', 50, 1, 1, 1],
+      ['Mona', 50, 1, 1, 1],
+      ['Ningguang', 50, 1, 1, 1],
+      ['Noelle', 70, 3, 3, 3],
+      ['Razor', 70, 1, 1, 1],
+      ['Sucrose', 80, 3, 5, 5],
+      ['Tartaglia', 50, 1, 1, 1],
+      ['Traveler (Anemo)', 90, 1, 1, 1], // note: travelers are split up because
+      ['Traveler (Geo)', 90, 1, 1, 1], //         their talents differ per element
+      ['Venti', 50, 1, 1, 1],
+      ['Xiangling', 50, 1, 1, 1],
+      ['Xiao', 50, 1, 1, 1],
+      ['Xingqiu', 50, 1, 1, 1],
+      ['Xinyan', 50, 1, 1, 1],
+      ['Zhongli', 50, 1, 1, 1],
+      ['Hu Tao', 1, 1, 1, 1]
+    ];
+
+    const totals = new RequiredResources();
+    for (let character of characters) {
+      let name = character[0].toString();
+      let level = Number(character[1]);
+      let talent1 = Number(character[2]);
+      let talent2 = Number(character[3]);
+      let talent3 = Number(character[4]);
+
+      totals.mergeWith(await this.levelController.getXToYAsObject(name, level, 70));
+      totals.mergeWith(await this.talentController.getXToYAsObject(name, talent1, 6));
+      totals.mergeWith(await this.talentController.getXToYAsObject(name, talent2, 6));
+      totals.mergeWith(await this.talentController.getXToYAsObject(name, talent3, 6));
+    }
+
+    return JSON.stringify(await this.resourceConverter.toSortedObject(totals));
+  }
+
   @Get('/character/:name')
   @Header('content-type', 'application/json')
   async getForCharacter(@Param('name') characterName: string, @Body() requestBody): Promise<string> {

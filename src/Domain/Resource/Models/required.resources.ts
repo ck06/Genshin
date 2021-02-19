@@ -14,121 +14,68 @@ import DomainDrop from '../../../Infrastructure/Models/Materials/Domain/domain';
 
 export default class RequiredResources {
   mora: AbstractResource = new Mora();
-  gather: AbstractResource;
-  experienceBook: AbstractResource[] = [];
-  experienceOre: AbstractResource[] = [];
-  talentBook: AbstractResource[] = [];
-  gems: AbstractResource[] = [];
-  domain: AbstractResource[] = [];
-  common: AbstractResource[] = [];
-  elite: AbstractResource[] = [];
-  resin: AbstractResource;
-  weekly: AbstractResource;
-  event: AbstractResource;
+  gather: Record<string, AbstractResource>;
+  experienceBook: Record<string, AbstractResource>;
+  experienceOre: Record<string, AbstractResource>;
+  talentBook: Record<string, AbstractResource>;
+  gems: Record<string, AbstractResource>;
+  domain: Record<string, AbstractResource>;
+  common: Record<string, AbstractResource>;
+  elite: Record<string, AbstractResource>;
+  resin: Record<string, AbstractResource>;
+  weekly: Record<string, AbstractResource>;
+  event: Record<string, AbstractResource>;
 
   public addResource(resource: AbstractResource) {
-    const name = resource.name;
-    const amount = resource.amount;
-    const quality = resource.quality;
-
     if (resource instanceof Mora) {
-      this.addMora(amount);
+      this.mora.add(resource.amount);
     } else if (resource instanceof GatheredItem) {
-      this.addGatherItems(name, amount, quality);
+      this.add('gather', resource);
     } else if (resource instanceof ResinEnemyDrop) {
-      this.addResinItems(name, amount, quality);
+      this.add('resin', resource);
     } else if (resource instanceof WeeklyEnemyDrop) {
-      this.addWeeklyItems(name, amount, quality);
+      this.add('weekly', resource);
     } else if (resource instanceof EventItem) {
-      this.addEvent(name, amount, quality);
+      this.add('event', resource);
     } else if (resource instanceof ExperienceBook) {
-      this.addExperienceBooks(name, amount, quality);
+      this.add('experienceBook', resource);
     } else if (resource instanceof ExperienceOre) {
-      this.addExperienceOre(name, amount, quality);
+      this.add('experienceOre', resource);
     } else if (resource instanceof TalentBook) {
-      this.addTalentBooks(name, amount, quality);
+      this.add('talentBook', resource);
     } else if (resource instanceof ElementalGem) {
-      this.addGems(name, amount, quality);
+      this.add('gems', resource);
     } else if (resource instanceof DomainDrop) {
-      this.addDomainItems(name, amount, quality);
+      this.add('domain', resource);
     } else if (resource instanceof CommonEnemyDrop) {
-      this.addCommonItems(name, amount, quality);
+      this.add('common', resource);
     } else if (resource instanceof DailyEnemyDrop) {
-      this.addEliteItems(name, amount, quality);
+      this.add('elite', resource);
     }
   }
 
   public mergeWith(otherResources: RequiredResources) {
     for (let [key, resource] of Object.entries(otherResources)) {
-      if (resource instanceof Array) {
-        resource.forEach(resourceItem => {
-          this.addResource(resourceItem);
-        });
-      } else if (resource instanceof AbstractResource) {
+      if (key === 'mora') {
         this.addResource(resource);
+      } else {
+        for (let [name, nestedResource] of Object.entries(resource)) {
+          if (nestedResource instanceof AbstractResource) {
+            this.addResource(nestedResource);
+          } else {
+            throw Error('Something went wrong while converting');
+          }
+        }
       }
     }
   }
 
-  private addMora(amount: number) {
-    this.mora.add(amount);
-  }
-
-  private addGatherItems(name: string, amount: number, quality: number) {
-    !this.gather ? (this.gather = new GatheredItem(name, amount, quality)) : this.gather.add(amount);
-  }
-
-  private addExperienceBooks(name: string, amount: number, quality: number) {
-    !this.experienceBook[quality]
-      ? (this.experienceBook[quality] = new ExperienceBook(name, amount, quality))
-      : this.experienceBook[quality].add(amount);
-  }
-
-  private addExperienceOre(name: string, amount: number, quality: number) {
-    !this.experienceOre[quality]
-      ? (this.experienceOre[quality] = new ExperienceOre(name, amount, quality))
-      : this.experienceOre[quality].add(amount);
-  }
-
-  private addTalentBooks(name: string, amount: number, quality: number) {
-    !this.talentBook[quality]
-      ? (this.talentBook[quality] = new TalentBook(name, amount, quality))
-      : this.talentBook[quality].add(amount);
-  }
-
-  private addGems(name: string, amount: number, quality: number) {
-    !this.gems[quality]
-      ? (this.gems[quality] = new ElementalGem(name, amount, quality))
-      : this.gems[quality].add(amount);
-  }
-
-  private addDomainItems(name: string, amount: number, quality: number) {
-    !this.domain[quality]
-      ? (this.domain[quality] = new DomainDrop(name, amount, quality))
-      : this.domain[quality].add(amount);
-  }
-
-  private addCommonItems(name: string, amount: number, quality: number) {
-    !this.common[quality]
-      ? (this.common[quality] = new CommonEnemyDrop(name, amount, quality))
-      : this.common[quality].add(amount);
-  }
-
-  private addEliteItems(name: string, amount: number, quality: number) {
-    !this.elite[quality]
-      ? (this.elite[quality] = new DailyEnemyDrop(name, amount, quality))
-      : this.elite[quality].add(amount);
-  }
-
-  private addResinItems(name: string, amount: number, quality: number) {
-    !this.resin ? (this.resin = new ResinEnemyDrop(name, amount, quality)) : this.resin.add(amount);
-  }
-
-  private addWeeklyItems(name: string, amount: number, quality: number) {
-    !this.weekly ? (this.weekly = new WeeklyEnemyDrop(name, amount, quality)) : this.weekly.add(amount);
-  }
-
-  private addEvent(name: string, amount: number, quality: number) {
-    !this.event ? (this.event = new EventItem(name, amount, quality)) : this.event.add(amount);
+  private add(type: string, object: AbstractResource) {
+    if (!this[type]) this[type] = [];
+    if (!this[type][object.name]) {
+      this[type][object.name] = object;
+    } else {
+      this[type][object.name].add(object.amount);
+    }
   }
 }
