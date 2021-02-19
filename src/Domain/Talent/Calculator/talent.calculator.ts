@@ -16,9 +16,11 @@ export class TalentCalculator {
 
   private async checkConstraints(start: number, end: number) {
     // fetch level range through ascension details
-    // note: subtracting 1 from end since there is no ascension for the max level.
     let levelRange = Array.from(await this.em.find(TalentAscensionDetails)).map(exp => exp.level);
-    if (levelRange.includes(start) && levelRange.includes(end - 1)) {
+
+    // note: manually adding an extra entry to levelRange as there are no ascensionDetails for level 10
+    levelRange.push(10);
+    if (levelRange.includes(start) && levelRange.includes(end)) {
       return;
     }
 
@@ -38,7 +40,7 @@ export class TalentCalculator {
     const ASCENSIONS = await CHARACTER.talentAscensions;
 
     for (let ascension of ASCENSIONS) {
-      if (ascension.details.level < start || ascension.details.level > end) {
+      if (ascension.details.level < start || ascension.details.level >= end) {
         continue;
       }
 

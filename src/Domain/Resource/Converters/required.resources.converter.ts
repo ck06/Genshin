@@ -139,9 +139,9 @@ export class RequiredResourcesConverter {
           sortedObject[name] = resources.weekly.amount;
         }
 
-        if(resources.crown && resources.crown.amount > 0) {
-            const name = resources.crown.name !== '' ? resources.crown.name : ' Crowns (event)';
-            sortedObject[name] = resources.crown.amount;
+        if(resources.event && resources.event.amount > 0) {
+            const name = resources.event.name !== '' ? resources.event.name : ' Crowns (event)';
+            sortedObject[name] = resources.event.amount;
         }
 
         // mora is always filled, even if at 0

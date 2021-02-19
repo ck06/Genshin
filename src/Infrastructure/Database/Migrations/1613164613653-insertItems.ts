@@ -136,6 +136,8 @@ export class insertItems1613164613653 implements MigrationInterface {
     ['Treasure Hoarder Insignia', 1, 7],
     ['Silver Raven Insignia', 2, 7],
     ['Golden Raven Insignia', 3, 7],
+
+    // these are technically daily, but they are used in some characters' Common resources for some reason
     ['Whopperflower Nectar', 1, 7],
     ['Shimmering Nectar', 2, 7],
     ['Energy Nectar', 3, 7],

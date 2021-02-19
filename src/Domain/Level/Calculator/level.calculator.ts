@@ -52,7 +52,8 @@ export class LevelCalculator {
       cumulativeExp += EXP_PER_LEVEL[currentLevel - 1];
 
       // experience is separate since it has to go past max ascension.
-      if (currentLevel == end || ASCENSION_LEVELS.includes(currentLevel)) {
+      // currentLevel+1 prevents calculation of exp for target level.
+      if (currentLevel+1 == end || ASCENSION_LEVELS.includes(currentLevel)) {
         this.calculateExperience(cumulativeExp, BOOKS).forEach(book => {
           TOTALS.addResource(book);
         });
@@ -60,10 +61,11 @@ export class LevelCalculator {
         cumulativeExp = 0;
       }
 
-      if (ASCENSION_LEVELS.includes(currentLevel)) {
+      // currentLevel-1 prevents calculation of ascension for target level.
+      if (ASCENSION_LEVELS.includes(currentLevel-1)) {
         let characterAscension: CharacterAscension;
         for (let ascension of ASCENSIONS) {
-          if (ascension.details.level == currentLevel) {
+          if (ascension.details.level == currentLevel-1) {
             characterAscension = ascension;
             break;
           }

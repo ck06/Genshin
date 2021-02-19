@@ -24,7 +24,7 @@ export default class RequiredResources {
   elite: AbstractResource[] = [];
   resin: AbstractResource;
   weekly: AbstractResource;
-  crown: AbstractResource;
+  event: AbstractResource;
 
   public addResource(resource: AbstractResource) {
     const name = resource.name;
@@ -40,7 +40,7 @@ export default class RequiredResources {
     } else if (resource instanceof WeeklyEnemyDrop) {
       this.addWeeklyItems(name, amount, quality);
     } else if (resource instanceof EventItem) {
-      this.addCrown(name, amount, quality);
+      this.addEvent(name, amount, quality);
     } else if (resource instanceof ExperienceBook) {
       this.addExperienceBooks(name, amount, quality);
     } else if (resource instanceof ExperienceOre) {
@@ -58,14 +58,24 @@ export default class RequiredResources {
     }
   }
 
+  public mergeWith(otherResources: RequiredResources) {
+    for (let [key, resource] of Object.entries(otherResources)) {
+      if (resource instanceof Array) {
+        resource.forEach(resourceItem => {
+          this.addResource(resourceItem);
+        });
+      } else if (resource instanceof AbstractResource) {
+        this.addResource(resource);
+      }
+    }
+  }
+
   private addMora(amount: number) {
     this.mora.add(amount);
   }
 
   private addGatherItems(name: string, amount: number, quality: number) {
-    !this.gather
-      ? (this.gather = new GatheredItem(name, amount, quality))
-      : this.gather.add(amount);
+    !this.gather ? (this.gather = new GatheredItem(name, amount, quality)) : this.gather.add(amount);
   }
 
   private addExperienceBooks(name: string, amount: number, quality: number) {
@@ -115,13 +125,10 @@ export default class RequiredResources {
   }
 
   private addWeeklyItems(name: string, amount: number, quality: number) {
-    !this.weekly
-      ? (this.weekly = new WeeklyEnemyDrop(name, amount, quality))
-      : this.weekly.add(amount);
+    !this.weekly ? (this.weekly = new WeeklyEnemyDrop(name, amount, quality)) : this.weekly.add(amount);
   }
 
-  // technically an Event item, but I'm leaving it as Crown until another item pops up.
-  private addCrown(name: string, amount: number, quality: number) {
-    this.crown = new EventItem(name, amount, quality);
+  private addEvent(name: string, amount: number, quality: number) {
+    !this.event ? (this.event = new EventItem(name, amount, quality)) : this.event.add(amount);
   }
 }

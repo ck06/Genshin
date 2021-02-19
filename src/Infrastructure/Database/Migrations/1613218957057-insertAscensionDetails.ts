@@ -98,7 +98,7 @@ export class insertAscensionDetails1613218957057 implements MigrationInterface {
           Number(details[3]),
           qualities[Number(details[7]) - 1],
           Number(details[4]),
-          Boolean(details[9])
+          Boolean(details[8])
         )
       );
     }
