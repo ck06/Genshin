@@ -1,8 +1,10 @@
 import { Controller, Get, Header, Param } from '@nestjs/common';
 import { WeaponCalculator } from '../../../Domain/Weapon/Calculator/weapon.calculator';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
+import { ApiTags } from "@nestjs/swagger";
 
-@Controller()
+@ApiTags('Weapon Data')
+@Controller('/weapon')
 export class WeaponController {
   private readonly MIN = 1;
   private readonly MAX = 90;
@@ -12,7 +14,7 @@ export class WeaponController {
     private readonly resourceConverter: RequiredResourcesConverter
   ) {}
 
-  @Get('/weapon/:name/from/:start/to/:end')
+  @Get('/:name/from/:start/to/:end')
   @Header('content-type', 'application/json')
   async getXToY(
     @Param('name') name: string,
@@ -24,7 +26,10 @@ export class WeaponController {
     );
   }
 
-  @Get('/weapon/:name')
+  /**
+   * Shorthand route to fetch data from minimum to maximum level.
+   */
+  @Get('/:name')
   @Header('content-type', 'application/json')
   async getMinToMax(@Param('name') name: string): Promise<string> {
     return this.getXToY(name, this.MIN, this.MAX);

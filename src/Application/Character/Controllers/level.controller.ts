@@ -2,9 +2,11 @@ import { Controller, Get, Header, Injectable, Param } from '@nestjs/common';
 import { LevelCalculator } from '../../../Domain/Level/Calculator/level.calculator';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
 import RequiredResources from '../../../Domain/Resource/Models/required.resources';
+import { ApiTags } from "@nestjs/swagger";
 
-@Controller()
-@Injectable()
+@ApiTags('Level Data')
+@Controller('/level')
+@Injectable() // has to be Injectable to use in the character controller.
 export class LevelController {
   private readonly MIN = 1;
   private readonly MAX = 90;
@@ -18,7 +20,7 @@ export class LevelController {
     return await this.levelCalculator.calculate(character, start, end);
   }
 
-  @Get('/level/:character/from/:start/to/:end')
+  @Get('/:character/from/:start/to/:end')
   @Header('content-type', 'application/json')
   public async getXToY(
     @Param('character') character: string,
@@ -30,7 +32,10 @@ export class LevelController {
     );
   }
 
-  @Get('/level/:character/')
+  /**
+   * Shorthand route to fetch data from minimum to maximum level.
+   */
+  @Get('/:character/')
   @Header('content-type', 'application/json')
   public async getCharacter(@Param('character') character: string): Promise<string> {
     return this.getXToY(character, this.MIN, this.MAX);
