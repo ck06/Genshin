@@ -27,30 +27,28 @@ export default class RequiredResources {
   event: Record<string, AbstractResource>;
 
   public addResource(resource: AbstractResource) {
+    const resourceMap: Record<string, typeof AbstractResource> = {
+      gather: GatheredItem,
+      resin: ResinEnemyDrop,
+      weekly: WeeklyEnemyDrop,
+      event: EventItem,
+      experienceBook: ExperienceBook,
+      experienceOre: ExperienceOre,
+      talentBook: TalentBook,
+      gems: ElementalGem,
+      domain: DomainDrop,
+      common: CommonEnemyDrop,
+      elite: DailyEnemyDrop
+    };
+
     if (resource instanceof Mora) {
       this.mora.add(resource.amount);
-    } else if (resource instanceof GatheredItem) {
-      this.add('gather', resource);
-    } else if (resource instanceof ResinEnemyDrop) {
-      this.add('resin', resource);
-    } else if (resource instanceof WeeklyEnemyDrop) {
-      this.add('weekly', resource);
-    } else if (resource instanceof EventItem) {
-      this.add('event', resource);
-    } else if (resource instanceof ExperienceBook) {
-      this.add('experienceBook', resource);
-    } else if (resource instanceof ExperienceOre) {
-      this.add('experienceOre', resource);
-    } else if (resource instanceof TalentBook) {
-      this.add('talentBook', resource);
-    } else if (resource instanceof ElementalGem) {
-      this.add('gems', resource);
-    } else if (resource instanceof DomainDrop) {
-      this.add('domain', resource);
-    } else if (resource instanceof CommonEnemyDrop) {
-      this.add('common', resource);
-    } else if (resource instanceof DailyEnemyDrop) {
-      this.add('elite', resource);
+    } else {
+      for (let key in resourceMap) {
+        if (resource instanceof resourceMap[key] && resourceMap.hasOwnProperty(key)) {
+          this.add(key, resource);
+        }
+      }
     }
   }
 
