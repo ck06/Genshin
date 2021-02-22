@@ -4,7 +4,7 @@ import { TalentController } from './talent.controller';
 import RequiredResources from '../../../Domain/Resource/Models/required.resources';
 import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
 import { CharacterDTO } from '../Models/character.dto';
-import { ApiExcludeEndpoint, ApiTags } from "@nestjs/swagger";
+import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Character Data')
 @Controller('/character')
@@ -73,8 +73,13 @@ export class CharacterController {
   @Get('/:name')
   @Header('content-type', 'application/json')
   async getForCharacter(@Param('name') characterName: string, @Body() requestBody: CharacterDTO): Promise<string> {
+    if (Object.keys(requestBody).length === 0) {
+      // defaults don't seem to apply if nothing at all is passed
+      requestBody = new CharacterDTO();
+      console.log('Request body was empty');
+    }
     const characterFrom = requestBody.characterLevelFrom;
-    const characterTo = requestBody.characterLevelTo
+    const characterTo = requestBody.characterLevelTo;
     const talent1From = requestBody.talent1LevelFrom ?? requestBody.allTalentsLevelFrom;
     const talent1To = requestBody.talent1LevelTo ?? requestBody.allTalentsLevelTo;
     const talent2From = requestBody.talent2LevelFrom ?? requestBody.allTalentsLevelFrom;

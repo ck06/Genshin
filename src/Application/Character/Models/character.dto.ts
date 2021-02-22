@@ -9,7 +9,7 @@ export class CharacterDTO {
    * target level for character calculations.
    * @example 90
    */
-  public characterLevelTo: number = 1;
+  public characterLevelTo: number = 90;
 
   /**
    * starting level for all talents.
@@ -23,7 +23,7 @@ export class CharacterDTO {
    * (overridden by talent-specific values)
    * @example 10
    */
-  public allTalentsLevelTo: number = 1;
+  public allTalentsLevelTo: number = 10;
 
   /**
    * starting level for the first talent
