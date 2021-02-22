@@ -24,7 +24,7 @@ export class LevelCalculator {
   private async checkConstraints(start: number, end: number) {
     // fetch level range through required EXP table
     let levelRange = Array.from(await this.em.find(CharacterExperience)).map(exp => exp.level);
-    if (levelRange.includes(start) && levelRange.includes(end)) {
+    if (levelRange.includes(Number(start)) && levelRange.includes(Number(end))) {
       return;
     }
 

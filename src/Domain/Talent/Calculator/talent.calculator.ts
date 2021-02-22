@@ -20,7 +20,7 @@ export class TalentCalculator {
 
     // note: manually adding an extra entry to levelRange as there are no ascensionDetails for level 10
     levelRange.push(10);
-    if (levelRange.includes(start) && levelRange.includes(end)) {
+    if (levelRange.includes(Number(start)) && levelRange.includes(Number(end))) {
       return;
     }
 

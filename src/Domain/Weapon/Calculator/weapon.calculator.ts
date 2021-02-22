@@ -23,7 +23,7 @@ export class WeaponCalculator {
   private async checkConstraints(weapon: Weapon, start: number, end: number) {
     // fetch level range through required EXP table
     let levelRange = (await this.em.find(WeaponExperience, { quality: weapon.quality })).map(exp => exp.level);
-    if (levelRange.includes(start) && levelRange.includes(end)) {
+    if (levelRange.includes(Number(start)) && levelRange.includes(Number(end))) {
       return;
     }
 
