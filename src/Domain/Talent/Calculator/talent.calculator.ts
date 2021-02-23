@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import CommonEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/common';
-import EventItem from '../../../Infrastructure/Models/Materials/World/event';
-import Mora from '../../../Infrastructure/Models/Materials/World/mora';
-import RequiredResources from '../../Resource/Models/required.resources';
-import TalentBook from '../../../Infrastructure/Models/Materials/Domain/talent.book';
-import WeeklyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/weekly';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { Character } from '../../../Infrastructure/Database/Entities/character.entity';
 import { TalentAscensionDetails } from '../../../Infrastructure/Database/Entities/character.talent.ascension.details.entity';
+import ResourceCollection from "../../Resource/Models/resourceCollection";
+import Resource from "../../Resource/Models/resource";
+import { Item } from "../../../Infrastructure/Database/Entities/item.entity";
+import { ItemType } from "../../../Infrastructure/Database/Entities/item_type.entity";
 
 @Injectable()
 export class TalentCalculator {
@@ -32,27 +30,26 @@ export class TalentCalculator {
     return await this.em.findOneOrFail(Character, { name: characterName }, { relations: ['talentAscensions'] });
   }
 
-  public async calculate(characterName: string, start: number, end: number): Promise<RequiredResources> {
+  public async calculate(characterName: string, start: number, end: number): Promise<ResourceCollection> {
     await this.checkConstraints(start, end);
 
     const CHARACTER = await this.getCharacterFromName(characterName);
-    const TOTALS = new RequiredResources();
+    const TOTALS = new ResourceCollection();
     const ASCENSIONS = await CHARACTER.talentAscensions;
+    const MORA = await this.em.findOne(Item, {
+      where: { type: await this.em.findOne(ItemType, { inCode: ItemType.TYPE_MONEY }) }
+    });
 
     for (let ascension of ASCENSIONS) {
       if (ascension.details.level < start || ascension.details.level >= end) {
         continue;
       }
 
-      TOTALS.addResource(
-        new TalentBook(ascension.book.name, ascension.details.bookAmount, ascension.details.bookQuality.id)
-      );
-      TOTALS.addResource(
-        new CommonEnemyDrop(ascension.common.name, ascension.details.commonAmount, ascension.details.commonQuality.id)
-      );
-      TOTALS.addResource(new WeeklyEnemyDrop(ascension.weekly.name, ascension.details.weeklyAmount, 4));
-      TOTALS.addResource(new EventItem(ascension.event.name, Number(ascension.details.needsEvent), 5));
-      TOTALS.addResource(new Mora(ascension.details.mora));
+      TOTALS.addResource(new Resource(ascension.book, ascension.details.bookAmount))
+      TOTALS.addResource(new Resource(ascension.common, ascension.details.commonAmount))
+      TOTALS.addResource(new Resource(ascension.weekly, ascension.details.weeklyAmount))
+      TOTALS.addResource(new Resource(ascension.event, Number(ascension.details.needsEvent)))
+      TOTALS.addResource(new Resource(MORA, ascension.details.mora))
     }
 
     return TOTALS;

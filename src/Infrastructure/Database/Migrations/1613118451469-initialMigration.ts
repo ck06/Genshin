@@ -103,8 +103,9 @@ export class initialMigration1613118451469 implements MigrationInterface {
         name: 'item_type',
         columns: [
           { name: 'id', type: 'integer', isGenerated: true, isPrimary: true },
-          { name: 'in_code', type: 'varchar', length: '255' }, // TODO: create abstraction layer to fill requiredResources
-          { name: 'in_data', type: 'varchar', length: '255' }, //       using in_code as a key automagically.
+          { name: 'in_code', type: 'varchar', length: '255' },
+          { name: 'in_data', type: 'varchar', length: '255' },
+          { name: 'category', type: 'varchar', length: '255' },
         ],
       }),
     );

@@ -1,6 +1,6 @@
 import { Controller, Get, Header, Param } from '@nestjs/common';
 import { WeaponCalculator } from '../../../Domain/Weapon/Calculator/weapon.calculator';
-import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
+import { ResourceCollectionSorter } from '../../../Domain/Resource/Sorters/resourceCollection.sorter';
 import { ApiTags } from "@nestjs/swagger";
 
 @ApiTags('Weapon Data')
@@ -11,7 +11,7 @@ export class WeaponController {
 
   constructor(
     private readonly weaponCalculator: WeaponCalculator,
-    private readonly resourceConverter: RequiredResourcesConverter
+    private readonly resourceConverter: ResourceCollectionSorter
   ) {}
 
   @Get('/:name/from/:start/to/:end')
@@ -22,7 +22,7 @@ export class WeaponController {
     @Param('end') end: number
   ): Promise<string> {
     return JSON.stringify(
-      await this.resourceConverter.toSortedObject(await this.weaponCalculator.calculate(name, start, end))
+      await this.resourceConverter.sort(await this.weaponCalculator.calculate(name, start, end))
     );
   }
 

@@ -8,7 +8,7 @@ import { TalentAscensionDetails } from '../Infrastructure/Database/Entities/char
 import { Item } from '../Infrastructure/Database/Entities/item.entity';
 import { ItemType } from '../Infrastructure/Database/Entities/item_type.entity';
 import { Quality } from '../Infrastructure/Database/Entities/quality.entity';
-import { RequiredResourcesConverter } from "../Domain/Resource/Converters/required.resources.converter";
+import { ResourceCollectionSorter } from "../Domain/Resource/Sorters/resourceCollection.sorter";
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { RequiredResourcesConverter } from "../Domain/Resource/Converters/requir
     ),
   ],
   controllers: [TalentController],
-  providers: [TalentController, TalentCalculator, RequiredResourcesConverter],
-  exports: [TalentController, TalentCalculator, RequiredResourcesConverter],
+  providers: [TalentController, TalentCalculator, ResourceCollectionSorter],
+  exports: [TalentController, TalentCalculator, ResourceCollectionSorter],
 })
 export class TalentModule {}

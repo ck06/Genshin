@@ -1,11 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import RequiredResources from '../../Resource/Models/required.resources';
-import Mora from '../../../Infrastructure/Models/Materials/World/mora';
-import ExperienceBook from '../../../Infrastructure/Models/Materials/World/experience.book';
-import ElementalGem from '../../../Infrastructure/Models/Materials/World/elemental.gem';
-import CommonEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/common';
-import DailyEnemyDrop from '../../../Infrastructure/Models/Materials/Enemy/daily';
-import GatheredItem from '../../../Infrastructure/Models/Materials/World/gather';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { CharacterAscension } from '../../../Infrastructure/Database/Entities/character.ascension.entity';
 import { EntityManager } from 'typeorm';
@@ -13,6 +6,8 @@ import { Item } from '../../../Infrastructure/Database/Entities/item.entity';
 import { CharacterExperience } from '../../../Infrastructure/Database/Entities/character.experience.entity';
 import { Character } from '../../../Infrastructure/Database/Entities/character.entity';
 import { ItemType } from '../../../Infrastructure/Database/Entities/item_type.entity';
+import ResourceCollection from '../../Resource/Models/resourceCollection';
+import Resource from '../../Resource/Models/resource';
 
 @Injectable()
 export class LevelCalculator {
@@ -36,25 +31,33 @@ export class LevelCalculator {
     return await this.em.findOneOrFail(Character, { name: characterName }, { relations: ['characterAscensions'] });
   }
 
-  public async calculate(characterName: string, start: number, end: number): Promise<RequiredResources> {
+  public async calculate(characterName: string, start: number, end: number): Promise<ResourceCollection> {
     await this.checkConstraints(start, end);
 
+    const TOTALS = new ResourceCollection();
     const CHARACTER = await this.getCharacterFromName(characterName);
     const ASCENSIONS = await CHARACTER.characterAscensions;
     const ASCENSION_LEVELS = (await CHARACTER.characterAscensions).map(asc => asc.details.level);
-    const TOTALS = new RequiredResources();
     const EXP_PER_LEVEL = (await this.em.find(CharacterExperience)).map(exp => exp.expToNext);
-    const BOOKS = await (await this.em.findOne(ItemType, { inCode: 'experienceBook' }, { relations: ['items'] })).items;
+    const EXP_BOOKS = await this.em.find(Item, {
+      where: { type: await this.em.findOne(ItemType, { inCode: ItemType.TYPE_EXP_BOOK }) }
+    });
+    const MORA = await this.em.findOne(Item, {
+      where: { type: await this.em.findOne(ItemType, { inCode: ItemType.TYPE_MONEY }) }
+    });
 
     let cumulativeExp = 0;
     for (let currentLevel = start; currentLevel <= end; currentLevel++) {
-      TOTALS.addResource(new Mora(EXP_PER_LEVEL[currentLevel - 1] * this.MORA_PER_CHARACTER_EXP));
-      cumulativeExp += EXP_PER_LEVEL[currentLevel - 1];
+      // if you're already at target level, no need to add that level's mora.
+      if (currentLevel != end) {
+        TOTALS.addResource(new Resource(MORA, EXP_PER_LEVEL[currentLevel - 1] * this.MORA_PER_CHARACTER_EXP));
+      }
 
       // experience is separate since it has to go past max ascension.
       // currentLevel+1 prevents calculation of exp for target level.
-      if (currentLevel+1 == end || ASCENSION_LEVELS.includes(currentLevel)) {
-        this.calculateExperience(cumulativeExp, BOOKS).forEach(book => {
+      cumulativeExp += EXP_PER_LEVEL[currentLevel];
+      if (currentLevel + 1 == end || ASCENSION_LEVELS.includes(currentLevel)) {
+        LevelCalculator.calculateExperience(cumulativeExp, EXP_BOOKS).forEach(book => {
           TOTALS.addResource(book);
         });
 
@@ -62,52 +65,27 @@ export class LevelCalculator {
       }
 
       // currentLevel-1 prevents calculation of ascension for target level.
-      if (ASCENSION_LEVELS.includes(currentLevel-1)) {
+      if (ASCENSION_LEVELS.includes(currentLevel - 1)) {
         let characterAscension: CharacterAscension;
         for (let ascension of ASCENSIONS) {
-          if (ascension.details.level == currentLevel-1) {
+          if (ascension.details.level == currentLevel - 1) {
             characterAscension = ascension;
             break;
           }
         }
 
-        TOTALS.addResource(
-          new ElementalGem(
-            characterAscension.gem.name,
-            characterAscension.details.gemAmount,
-            characterAscension.details.gemQuality.id
-          )
-        );
-        TOTALS.addResource(
-          new CommonEnemyDrop(
-            characterAscension.common.name,
-            characterAscension.details.commonAmount,
-            characterAscension.details.commonQuality.id
-          )
-        );
-        TOTALS.addResource(
-          new DailyEnemyDrop(
-            characterAscension.boss.name,
-            characterAscension.details.bossAmount,
-            characterAscension.details.bossQuality.id
-          )
-        );
-        TOTALS.addResource(
-          new GatheredItem(
-            characterAscension.gather.name,
-            characterAscension.details.gatherAmount,
-            characterAscension.details.gatherQuality.id
-          )
-        );
-        TOTALS.addResource(new Mora(characterAscension.details.mora));
+        TOTALS.addResource(new Resource(characterAscension.gem, characterAscension.details.gemAmount));
+        TOTALS.addResource(new Resource(characterAscension.common, characterAscension.details.commonAmount));
+        TOTALS.addResource(new Resource(characterAscension.boss, characterAscension.details.bossAmount));
+        TOTALS.addResource(new Resource(characterAscension.gather, characterAscension.details.gatherAmount));
+        TOTALS.addResource(new Resource(MORA, characterAscension.details.mora));
       }
     }
     return TOTALS;
   }
 
-  // noinspection JSMethodCanBeStatic
-  private calculateExperience(exp: number, books: Item[]) {
-    const totalBooks: ExperienceBook[] = [];
+  private static calculateExperience(exp: number, books: Item[]): Resource[] {
+    const totalBooks: Resource[] = [];
     for (let quality = 4; quality > 1; quality--) {
       let currentBook: Item;
       for (let book of books) {
@@ -124,7 +102,7 @@ export class LevelCalculator {
 
         // the last little bit always needs 1 quality 2 book extra (wiki deals with it via mob exp)
         amount += Number(quality === 2);
-        totalBooks.push(new ExperienceBook(currentBook.name, amount, quality));
+        totalBooks.push(new Resource(currentBook, amount));
       }
     }
 

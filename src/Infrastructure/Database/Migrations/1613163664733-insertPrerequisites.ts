@@ -15,19 +15,22 @@ export class insertPrerequisites1613163664733 implements MigrationInterface {
   ];
 
   private readonly ITEM_TYPES = [
-    new ItemType(1, 'experienceOre', 'Weapon EXP Material'),
-    new ItemType(2, 'experienceBook', 'Character EXP Material'),
-    new ItemType(3, 'talentBook', 'Talent Level-Up Materials'),
-    new ItemType(4, 'gather', 'Local Materials'),
-    new ItemType(5, 'domain', 'Weapon Primary Materials'),
-    new ItemType(6, 'gems', 'Jewels'),
-    new ItemType(7, 'common', 'Common Materials'),
-    new ItemType(8, 'elite', 'Weapon Secondary Materials'),
-    new ItemType(9, 'resin', 'Elemental Stones'),
+    new ItemType(1, ItemType.TYPE_EXP_ORE, 'Weapon EXP Material', 'Experience Crystals'),
+    new ItemType(2, ItemType.TYPE_EXP_BOOK, 'Character EXP Material', 'Experience Books'),
+    new ItemType(3, ItemType.TYPE_TALENT_BOOK, 'Talent Level-Up Materials', 'Talent Domains'),
+    new ItemType(4, ItemType.TYPE_GATHER, 'Local Materials', 'Overworld'),
+    new ItemType(5, ItemType.TYPE_DOMAIN, 'Weapon Primary Materials', 'Weapon Domains'),
+    new ItemType(6, ItemType.TYPE_GEM, 'Jewels', 'Regular Bosses'),
+    new ItemType(7, ItemType.TYPE_COMMON, 'Common Materials', 'Common Enemies'),
+    new ItemType(8, ItemType.TYPE_ELITE, 'Weapon Secondary Materials', 'Elite Enemies'),
+    new ItemType(9, ItemType.TYPE_BOSS, 'Elemental Stones', 'Regular Bosses'),
 
     // These are handled separately in the code, so they require their own types.
-    new ItemType(10, 'weekly', 'Talent Level-Up Materials'),
-    new ItemType(11, 'event', 'Talent Level-Up Materials')
+    new ItemType(10, ItemType.TYPE_WEEKLY, 'Talent Level-Up Materials', 'Weekly Bosses'),
+    new ItemType(11, ItemType.TYPE_EVENT, 'Talent Level-Up Materials', 'Events'),
+
+    // Technically not an item but added to support abstraction.
+    new ItemType(12, ItemType.TYPE_MONEY, 'Mora', 'Currencies'),
   ];
 
   public async up(queryRunner: QueryRunner): Promise<void> {

@@ -1,8 +1,8 @@
 import { Controller, Get, Header, Injectable, Param } from '@nestjs/common';
 import { LevelCalculator } from '../../../Domain/Level/Calculator/level.calculator';
-import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
-import RequiredResources from '../../../Domain/Resource/Models/required.resources';
+import { ResourceCollectionSorter } from '../../../Domain/Resource/Sorters/resourceCollection.sorter';
 import { ApiTags } from "@nestjs/swagger";
+import ResourceCollection from "../../../Domain/Resource/Models/resourceCollection";
 
 @ApiTags('Level Data')
 @Controller('/level')
@@ -13,10 +13,10 @@ export class LevelController {
 
   constructor(
     private readonly levelCalculator: LevelCalculator,
-    private readonly resourceConverter: RequiredResourcesConverter
+    private readonly resourceConverter: ResourceCollectionSorter
   ) {}
 
-  public async getXToYAsObject(character: string, start: number, end: number): Promise<RequiredResources> {
+  public async getXToYAsObject(character: string, start: number, end: number): Promise<ResourceCollection> {
     return await this.levelCalculator.calculate(character, start, end);
   }
 
@@ -28,7 +28,7 @@ export class LevelController {
     @Param('end') end: number
   ): Promise<string> {
     return JSON.stringify(
-      await this.resourceConverter.toSortedObject(await this.getXToYAsObject(character, start, end))
+      await this.resourceConverter.sort(await this.getXToYAsObject(character, start, end))
     );
   }
 

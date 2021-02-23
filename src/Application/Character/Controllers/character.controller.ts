@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Header, Param } from '@nestjs/common';
 import { LevelController } from './level.controller';
 import { TalentController } from './talent.controller';
-import RequiredResources from '../../../Domain/Resource/Models/required.resources';
-import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
+import { ResourceCollectionSorter } from '../../../Domain/Resource/Sorters/resourceCollection.sorter';
 import { CharacterDTO } from '../Models/character.dto';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
+import ResourceCollection from "../../../Domain/Resource/Models/resourceCollection";
 
 @ApiTags('Character Data')
 @Controller('/character')
@@ -12,7 +12,7 @@ export class CharacterController {
   constructor(
     private readonly levelController: LevelController,
     private readonly talentController: TalentController,
-    private readonly resourceConverter: RequiredResourcesConverter
+    private readonly resourceConverter: ResourceCollectionSorter
   ) {}
 
   @ApiExcludeEndpoint()
@@ -53,7 +53,7 @@ export class CharacterController {
       ['Hu Tao', 1, 1, 1, 1]
     ];
 
-    const totals = new RequiredResources();
+    const totals = new ResourceCollection();
     for (let character of characters) {
       let name = character[0].toString();
       let level = Number(character[1]);
@@ -67,7 +67,7 @@ export class CharacterController {
       totals.mergeWith(await this.talentController.getXToYAsObject(name, talent3, 6));
     }
 
-    return JSON.stringify(await this.resourceConverter.toSortedObject(totals));
+    return JSON.stringify(await this.resourceConverter.sort(totals));
   }
 
   @Get('/:name')
@@ -76,8 +76,8 @@ export class CharacterController {
     if (Object.keys(requestBody).length === 0) {
       // defaults don't seem to apply if nothing at all is passed
       requestBody = new CharacterDTO();
-      console.log('Request body was empty');
     }
+
     const characterFrom = requestBody.characterLevelFrom;
     const characterTo = requestBody.characterLevelTo;
     const talent1From = requestBody.talent1LevelFrom ?? requestBody.allTalentsLevelFrom;
@@ -87,12 +87,12 @@ export class CharacterController {
     const talent3From = requestBody.talent3LevelFrom ?? requestBody.allTalentsLevelFrom;
     const talent3To = requestBody.talent3LevelTo ?? requestBody.allTalentsLevelTo;
 
-    const totals = new RequiredResources();
+    const totals = new ResourceCollection();
     totals.mergeWith(await this.levelController.getXToYAsObject(characterName, characterFrom, characterTo));
     totals.mergeWith(await this.talentController.getXToYAsObject(characterName, talent1From, talent1To));
     totals.mergeWith(await this.talentController.getXToYAsObject(characterName, talent2From, talent2To));
     totals.mergeWith(await this.talentController.getXToYAsObject(characterName, talent3From, talent3To));
 
-    return JSON.stringify(await this.resourceConverter.toSortedObject(totals));
+    return JSON.stringify(await this.resourceConverter.sort(totals));
   }
 }

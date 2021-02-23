@@ -1,7 +1,8 @@
 import { Controller, Get, Header, Injectable, Param } from '@nestjs/common';
 import { TalentCalculator } from '../../../Domain/Talent/Calculator/talent.calculator';
-import { RequiredResourcesConverter } from '../../../Domain/Resource/Converters/required.resources.converter';
+import { ResourceCollectionSorter } from '../../../Domain/Resource/Sorters/resourceCollection.sorter';
 import { ApiTags } from '@nestjs/swagger';
+import ResourceCollection from '../../../Domain/Resource/Models/resourceCollection';
 
 @ApiTags('Talent Data')
 @Controller('/talent')
@@ -12,10 +13,10 @@ export class TalentController {
 
   constructor(
     private readonly talentCalculator: TalentCalculator,
-    private readonly resourceConverter: RequiredResourcesConverter
+    private readonly resourceConverter: ResourceCollectionSorter
   ) {}
 
-  public async getXToYAsObject(character: string, start: number, end: number) {
+  public async getXToYAsObject(character: string, start: number, end: number): Promise<ResourceCollection> {
     return await this.talentCalculator.calculate(character, start, end);
   }
 
@@ -26,7 +27,9 @@ export class TalentController {
     @Param('start') start: number,
     @Param('end') end: number
   ): Promise<string> {
-    return JSON.stringify(await this.resourceConverter.toSortedObject(await this.getXToYAsObject(char, start, end)));
+    return JSON.stringify(
+      await this.resourceConverter.sort(await this.getXToYAsObject(char, start, end))
+    );
   }
 
   /**

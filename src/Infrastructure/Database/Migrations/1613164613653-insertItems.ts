@@ -186,7 +186,10 @@ export class insertItems1613164613653 implements MigrationInterface {
     ['Shadow of the Warrior', 5, 10, 'Childe'],
 
     // crown
-    ['Crown of Insight', 5, 11, 'Only obtainable through event reward']
+    ['Crown of Insight', 5, 11, 'Only obtainable through event reward'],
+
+    // not technically an item, but added to support abstraction
+    ['Mora', 3, 12]
   ];
 
   public async up(queryRunner: QueryRunner): Promise<void> {
