@@ -6,8 +6,9 @@ import { Item } from '../../../Infrastructure/Database/Entities/item.entity';
 import { CharacterExperience } from '../../../Infrastructure/Database/Entities/character.experience.entity';
 import { Character } from '../../../Infrastructure/Database/Entities/character.entity';
 import { ItemType } from '../../../Infrastructure/Database/Entities/item_type.entity';
-import ResourceCollection from '../../Resource/Models/resourceCollection';
-import Resource from '../../Resource/Models/resource';
+import ResourceCollection from '../../Shared/Models/resourceCollection';
+import Resource from '../../Shared/Models/resource';
+import ExperienceCalculator from "../../Shared/Calculators/experience.calculator";
 
 @Injectable()
 export class LevelCalculator {
@@ -57,7 +58,7 @@ export class LevelCalculator {
       // currentLevel+1 prevents calculation of exp for target level.
       cumulativeExp += EXP_PER_LEVEL[currentLevel];
       if (currentLevel + 1 == end || ASCENSION_LEVELS.includes(currentLevel)) {
-        LevelCalculator.calculateExperience(cumulativeExp, EXP_BOOKS).forEach(book => {
+        ExperienceCalculator.calculate(cumulativeExp, EXP_BOOKS).forEach(book => {
           TOTALS.addResource(book);
         });
 
@@ -82,30 +83,5 @@ export class LevelCalculator {
       }
     }
     return TOTALS;
-  }
-
-  private static calculateExperience(exp: number, books: Item[]): Resource[] {
-    const totalBooks: Resource[] = [];
-    for (let quality = 4; quality > 1; quality--) {
-      let currentBook: Item;
-      for (let book of books) {
-        if (book.quality.id === quality) {
-          currentBook = book;
-          break;
-        }
-      }
-
-      if (currentBook instanceof Item) {
-        // determine books required
-        let amount = Math.floor(exp / Number(currentBook.details));
-        exp %= Number(currentBook.details);
-
-        // the last little bit always needs 1 quality 2 book extra (wiki deals with it via mob exp)
-        amount += Number(quality === 2);
-        totalBooks.push(new Resource(currentBook, amount));
-      }
-    }
-
-    return totalBooks;
   }
 }

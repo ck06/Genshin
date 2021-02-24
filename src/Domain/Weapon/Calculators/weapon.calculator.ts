@@ -6,8 +6,9 @@ import { Item } from '../../../Infrastructure/Database/Entities/item.entity';
 import { WeaponExperience } from '../../../Infrastructure/Database/Entities/weapon.experience.entity';
 import { Weapon } from '../../../Infrastructure/Database/Entities/weapon.entity';
 import { ItemType } from '../../../Infrastructure/Database/Entities/item_type.entity';
-import ResourceCollection from '../../Resource/Models/resourceCollection';
-import Resource from '../../Resource/Models/resource';
+import ResourceCollection from '../../Shared/Models/resourceCollection';
+import Resource from '../../Shared/Models/resource';
+import ExperienceCalculator from "../../Shared/Calculators/experience.calculator";
 
 @Injectable()
 export class WeaponCalculator {
@@ -58,7 +59,7 @@ export class WeaponCalculator {
       // currentLevel+1 prevents calculation of exp for target level.
       cumulativeExp += EXP_PER_LEVEL[currentLevel];
       if (currentLevel == end || ASCENSION_LEVELS.includes(currentLevel)) {
-        this.calculateExperience(cumulativeExp, EXP_ORES).forEach(ore => TOTALS.addResource(ore));
+        ExperienceCalculator.calculate(cumulativeExp, EXP_ORES).forEach(ore => TOTALS.addResource(ore));
         cumulativeExp = 0;
       }
 
@@ -78,30 +79,5 @@ export class WeaponCalculator {
       }
     }
     return TOTALS;
-  }
-
-  private calculateExperience(exp: number, ores: Item[]): Resource[] {
-    const totalOres: Resource[] = [];
-    for (let quality = 4; quality > 1; quality--) {
-      let currentOre: Item;
-      for (let ore of ores) {
-        if (ore.quality.id === quality) {
-          currentOre = ore;
-          break;
-        }
-      }
-
-      if (currentOre instanceof Item) {
-        // determine ores required
-        let amount = Math.floor(exp / Number(currentOre.details));
-        exp %= Number(currentOre.details);
-
-        // the last little bit always needs 1 quality 2 ore extra (wiki deals with it via mob exp)
-        amount += Number(quality === 2);
-        totalOres.push(new Resource(currentOre, amount));
-      }
-    }
-
-    return totalOres;
   }
 }

@@ -1,8 +1,8 @@
 import { Controller, Get, Header, Injectable, Param } from '@nestjs/common';
-import { TalentCalculator } from '../../../Domain/Talent/Calculator/talent.calculator';
-import { ResourceCollectionSorter } from '../../../Domain/Resource/Sorters/resourceCollection.sorter';
+import { TalentCalculator } from '../../../Domain/Character/Calculators/talent.calculator';
+import { ResourceCollectionSorter } from '../../../Domain/Shared/Sorters/resourceCollection.sorter';
 import { ApiTags } from '@nestjs/swagger';
-import ResourceCollection from '../../../Domain/Resource/Models/resourceCollection';
+import ResourceCollection from '../../../Domain/Shared/Models/resourceCollection';
 
 @ApiTags('Talent Data')
 @Controller('/talent')

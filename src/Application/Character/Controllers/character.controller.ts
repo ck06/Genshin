@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Header, Param } from '@nestjs/common';
 import { LevelController } from './level.controller';
 import { TalentController } from './talent.controller';
-import { ResourceCollectionSorter } from '../../../Domain/Resource/Sorters/resourceCollection.sorter';
+import { ResourceCollectionSorter } from '../../../Domain/Shared/Sorters/resourceCollection.sorter';
 import { CharacterDTO } from '../Models/character.dto';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
-import ResourceCollection from "../../../Domain/Resource/Models/resourceCollection";
+import ResourceCollection from "../../../Domain/Shared/Models/resourceCollection";
 
 @ApiTags('Character Data')
 @Controller('/character')

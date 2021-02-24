@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { WeaponController } from '../Application/Weapon/Controllers/weapon.controller';
-import { WeaponCalculator } from '../Domain/Weapon/Calculator/weapon.calculator';
-import { ResourceCollectionSorter } from '../Domain/Resource/Sorters/resourceCollection.sorter';
+import { WeaponCalculator } from '../Domain/Weapon/Calculators/weapon.calculator';
+import { ResourceCollectionSorter } from '../Domain/Shared/Sorters/resourceCollection.sorter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Weapon } from '../Infrastructure/Database/Entities/weapon.entity';
 import { Item } from '../Infrastructure/Database/Entities/item.entity';

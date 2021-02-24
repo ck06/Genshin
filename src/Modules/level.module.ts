@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { LevelController } from '../Application/Character/Controllers/level.controller';
-import { LevelCalculator } from '../Domain/Level/Calculator/level.calculator';
-import { ResourceCollectionSorter } from '../Domain/Resource/Sorters/resourceCollection.sorter';
+import { LevelCalculator } from '../Domain/Character/Calculators/level.calculator';
+import { ResourceCollectionSorter } from '../Domain/Shared/Sorters/resourceCollection.sorter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CharacterAscension } from '../Infrastructure/Database/Entities/character.ascension.entity';
 import { CharacterAscensionDetails } from '../Infrastructure/Database/Entities/character.ascension.details.entity';

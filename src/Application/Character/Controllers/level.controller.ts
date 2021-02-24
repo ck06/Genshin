@@ -1,8 +1,8 @@
 import { Controller, Get, Header, Injectable, Param } from '@nestjs/common';
-import { LevelCalculator } from '../../../Domain/Level/Calculator/level.calculator';
-import { ResourceCollectionSorter } from '../../../Domain/Resource/Sorters/resourceCollection.sorter';
+import { LevelCalculator } from '../../../Domain/Character/Calculators/level.calculator';
+import { ResourceCollectionSorter } from '../../../Domain/Shared/Sorters/resourceCollection.sorter';
 import { ApiTags } from "@nestjs/swagger";
-import ResourceCollection from "../../../Domain/Resource/Models/resourceCollection";
+import ResourceCollection from "../../../Domain/Shared/Models/resourceCollection";
 
 @ApiTags('Level Data')
 @Controller('/level')

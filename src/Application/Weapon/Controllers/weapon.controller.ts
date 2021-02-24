@@ -1,6 +1,6 @@
 import { Controller, Get, Header, Param } from '@nestjs/common';
-import { WeaponCalculator } from '../../../Domain/Weapon/Calculator/weapon.calculator';
-import { ResourceCollectionSorter } from '../../../Domain/Resource/Sorters/resourceCollection.sorter';
+import { WeaponCalculator } from '../../../Domain/Weapon/Calculators/weapon.calculator';
+import { ResourceCollectionSorter } from '../../../Domain/Shared/Sorters/resourceCollection.sorter';
 import { ApiTags } from "@nestjs/swagger";
 
 @ApiTags('Weapon Data')

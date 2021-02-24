@@ -3,8 +3,8 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { Character } from '../../../Infrastructure/Database/Entities/character.entity';
 import { TalentAscensionDetails } from '../../../Infrastructure/Database/Entities/character.talent.ascension.details.entity';
-import ResourceCollection from "../../Resource/Models/resourceCollection";
-import Resource from "../../Resource/Models/resource";
+import ResourceCollection from "../../Shared/Models/resourceCollection";
+import Resource from "../../Shared/Models/resource";
 import { Item } from "../../../Infrastructure/Database/Entities/item.entity";
 import { ItemType } from "../../../Infrastructure/Database/Entities/item_type.entity";
 
