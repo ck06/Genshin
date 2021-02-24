@@ -1,10 +1,10 @@
-import { Item } from "../../../Infrastructure/Database/Entities/item.entity";
-import Resource from "../Models/resource";
+import { Item } from '../../../Infrastructure/Database/Entities/item.entity';
+import Resource from '../Models/resource';
 
 export default class ExperienceCalculator {
   public static calculate(exp: number, items: Item[]): Resource[] {
     const totalItems: Resource[] = [];
-    for (let quality = 4; quality > 1; quality--) {
+    for (let quality = 5; quality > 0; quality--) {
       let currentItem: Item;
       for (let item of items) {
         if (item.quality.id === quality) {
@@ -13,16 +13,16 @@ export default class ExperienceCalculator {
         }
       }
 
-      if (currentItem instanceof Item) {
-        // determine items required
-        let amount = Math.floor(exp / Number(currentItem.details));
-        exp %= Number(currentItem.details);
+      // since not all qualities have an item, a "none found" sanity check is required.
+      if (currentItem === undefined) continue;
 
-        // the last little bit always needs 1 quality 2 item extra (wiki deals with it via mob exp)
-        amount += Number(quality === 2);
-        totalItems.push(new Resource(currentItem, amount));
-      }
+      let amount = Math.floor(exp / Number(currentItem.details));
+      exp %= Number(currentItem.details);
+      totalItems.push(new Resource(currentItem, amount));
     }
+
+    // if any exp is left, add one more of the lowest quality item to cover for it
+    if (exp > 0 && totalItems.length > 0) totalItems[totalItems.length-1].add(1);
 
     return totalItems;
   }
