@@ -24,7 +24,7 @@ if (fs.existsSync(DATABASE_PATH)) {
       synchronize: false,
       cli: {
         entitiesDir: './Infrastructure/Database/Entities',
-        migrationsDir: './Infrastructure/Database/Queries',
+        migrationsDir: './Infrastructure/Database/Migrations',
       },
     }),
   ],

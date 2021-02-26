@@ -11,7 +11,7 @@
     "dist/Infrastructure/Database/Migrations/*-*.js"
   ],
   "migrationsTableName": "_migrations",
-  "migrationsTransactionMode": "all",
+  "migrationsTransactionMode": "each",
   "synchronize": false,
   "cli": {
     "entitiesDir": "src/Infrastructure/Database/Entities",
