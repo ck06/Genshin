@@ -14,7 +14,7 @@ if (fs.existsSync(DATABASE_PATH)) {
     TypeOrmModule.forRoot({
       type: 'sqlite',
       name: 'SQLite',
-      database: 'src/Infrastructure/Database/Genshin.db',
+      database: DATABASE_PATH,
       autoLoadEntities: true,
       migrations: ['dist/Infrastructure/Database/Migrations/*-*.js'],
       migrationsTableName: '_migrations',
